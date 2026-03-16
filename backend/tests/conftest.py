@@ -19,7 +19,7 @@ def event_loop():
     yield loop
     loop.close()
 
-@pytest_asyncio.fixture(scope="session", autouse=True)
+@pytest_asyncio.fixture(scope="session")
 async def setup_database():
     """Initialize DB connection and index once per session."""
     await connect_to_mongo()
@@ -31,7 +31,7 @@ async def setup_database():
     await db.client.drop_database(os.environ["DATABASE_NAME"])
     await close_mongo_connection()
 
-@pytest_asyncio.fixture(autouse=True)
+@pytest_asyncio.fixture()
 async def clear_collections():
     """Clear test data from the database before each test execution."""
     db = get_database()

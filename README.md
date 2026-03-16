@@ -46,4 +46,14 @@
 
 ## 🛠️ 本地开发运行
 
-*(待补充详细的环境搭建、启动命令及依赖安装步骤)*
+### 后端 (Backend)
+1. 进入目录：`cd backend`
+2. 安装依赖：`uv sync` (需安装 [uv](https://github.com/astral-sh/uv))
+3. 配置 `.env` (参考 `.env.example`)
+4. 运行：`PYTHONPATH=. uv run uvicorn app.main:app --reload`
+
+### 前端 (Frontend) - 开发中
+*(待前端框架初始化后更新)*
+
+---
+**Haikou Yummy Project** | 2026
