@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-tesla-dark text-tesla-light font-sans antialiased m-0 p-0;
+  }
+  
+  html, body, #root {
+    @apply h-full w-full overflow-hidden;
+  }
+}
+
+@layer components {
+  /* Tesla styled scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-tesla-dark;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-tesla-gray rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-tesla-muted;
+  }
+
+  .glass-panel {
+    @apply bg-tesla-black/80 backdrop-blur-md border border-tesla-gray/50 shadow-lg;
+  }
+
+  .tesla-btn {
+    @apply px-4 py-2 bg-transparent border-2 border-tesla-red text-tesla-red 
+           hover:bg-tesla-red hover:text-white transition-all duration-300 ease-in-out
+           rounded uppercase tracking-wider text-sm font-semibold shadow-[0_0_10px_rgba(227,25,55,0.2)]
+           hover:shadow-[0_0_20px_rgba(227,25,55,0.5)];
+  }
+
+  .tesla-btn-solid {
+    @apply px-4 py-2 bg-tesla-red border-2 border-tesla-red text-white 
+           hover:bg-red-700 hover:border-red-700 transition-all duration-300 ease-in-out
+           rounded uppercase tracking-wider text-sm font-semibold shadow-[0_0_15px_rgba(227,25,55,0.4)];
+  }
+}
