@@ -19,7 +19,16 @@ export default function MapContainer({
 
   useEffect(() => {
     const key = import.meta.env.VITE_AMAP_KEY || '';
+    const securityCode = import.meta.env.VITE_AMAP_SECURITY_CODE || '';
+    
     if (!key) return;
+
+    // Set security config before loading
+    if (securityCode) {
+      window._AMapSecurityConfig = {
+        securityJsCode: securityCode,
+      };
+    }
 
     AMapLoader.load({
       key: key,

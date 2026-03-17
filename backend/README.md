@@ -43,18 +43,12 @@ PYTHONPATH=. uv run uvicorn app.main:app --reload
 ```
 启动后访问：[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) 查看 Swagger 接口文档。
 
-## 🕸️ 数据清洗与抓取
-1. **基础导入**: 将原始文本放入 `scripts/raw_data.txt`，运行：
-   ```bash
-   PYTHONPATH=. uv run scripts/import_restaurants.py
-   ```
-2. **详情补全 (大众点评/人肉搜索模式)**:
-   如果您需要补全地址和电话，可以执行：
-   ```bash
-   # 已集成多源搜索后的补全脚本
-   PYTHONPATH=. uv run scripts/apply_manual_updates.py
-   ```
-*注：该流程已完成对 26 家初始餐厅的详情补全，详细数据见 `scripts/cleaned_restaurants.json`。*
+## 🕸️ 数据清洗与补全
+1. **基础坐标解析**: `scripts/import_restaurants.py` (腾讯地图 API)。
+2. **精细化详情补全**: `scripts/unified_enrichment.py` (主推高德地图 API)。
+   - **自动化获取**: 官方地址、联系电话、菜系分类。
+   - **门店照片**: 抓取高德 POI 官方实拍图，无图则自动回退至全局默认美图。
+*注：当前 26 家餐厅已全部完成高标准的详情补全。数据存储在 MongoDB Atlas 及 `scripts/cleaned_restaurants.json`。*
 
 ## 🧪 运行测试
 使用 pytest 执行异步接口测试：
