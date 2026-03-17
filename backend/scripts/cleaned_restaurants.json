@@ -2,8 +2,9 @@
   {
     "name": "鸿运饭店",
     "category": [
-      "海南菜",
-      "家常菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -12,7 +13,7 @@
         20.0271
       ]
     },
-    "address": "海口市美兰区白沙街道美舍路181号",
+    "address": "白龙街道美舍路181号",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -21,13 +22,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66074b0b8bfd52ecddc",
-    "telephone": "0898-65373658"
+    "telephone": "13976111864"
   },
   {
     "name": "鸭你吃美食大院",
     "category": [
-      "烤鸭",
-      "家常菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -36,7 +38,7 @@
         20.0285
       ]
     },
-    "address": "海口市美兰区白龙北路(近白龙南路)",
+    "address": "海南省海口市美兰区白龙北路26号A113号场地",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -45,13 +47,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66074b0b8bfd52ecddd",
-    "telephone": "0898-65331188"
+    "telephone": "13098966577"
   },
   {
     "name": "金地骨汤美苑路店",
     "category": [
-      "骨汤",
-      "汤锅"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -60,7 +63,7 @@
         20.0265
       ]
     },
-    "address": "海口市美兰区美苑路金地小区旁",
+    "address": "美苑路80号",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -69,13 +72,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66074b0b8bfd52ecdde",
-    "telephone": "13807661234"
+    "telephone": "18189873566"
   },
   {
     "name": "富乐鸡饭店五指山路店",
     "category": [
-      "海南鸡饭",
-      "本地菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -84,7 +88,7 @@
         20.0341
       ]
     },
-    "address": "海口市美兰区五指山路5号松涛大厦1楼",
+    "address": "五指山路5松涛大厦",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -93,13 +97,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66074b0b8bfd52ecddf",
-    "telephone": "0898-65343468"
+    "telephone": "0898-66722592"
   },
   {
     "name": "小鲜灶铁锅坊",
     "category": [
-      "铁锅炖",
-      "家常菜"
+      "餐饮服务",
+      "中餐厅",
+      "特色/地方风味餐厅"
     ],
     "location": {
       "type": "Point",
@@ -108,7 +113,7 @@
         20.0302
       ]
     },
-    "address": "海口市美兰区青年路(近群上路)",
+    "address": "五指山路1-号珠江大厦一层A铺面",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -117,13 +122,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66074b0b8bfd52ecde0",
-    "telephone": "18976321212"
+    "telephone": "13654563732"
   },
   {
     "name": "潮欣牛肉店南亚店",
     "category": [
-      "牛肉",
-      "潮汕菜"
+      "餐饮服务",
+      "中餐厅",
+      "火锅店"
     ],
     "location": {
       "type": "Point",
@@ -132,7 +138,7 @@
         20.0318
       ]
     },
-    "address": "海口市美兰区龙舌路10号龙福大厦第1层1B3-4号",
+    "address": "和平南路延长段(龙舌坡路交接处)",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -141,13 +147,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66074b0b8bfd52ecde1",
-    "telephone": "0898-65352222"
+    "telephone": "0898-65323189;0898-68951883"
   },
   {
     "name": "姥佰娘桫椤湾店",
     "category": [
-      "海南菜",
-      "家常菜"
+      "餐饮服务",
+      "冷饮店",
+      "冷饮店"
     ],
     "location": {
       "type": "Point",
@@ -156,7 +163,7 @@
         20.0412
       ]
     },
-    "address": "海口市美兰区美苑路桫椤湾娱乐艺术广场3层",
+    "address": "国兴大道63号桫椤湾娱乐艺术风情街一层3-109",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -165,13 +172,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66074b0b8bfd52ecde2",
-    "telephone": "0898-65239999"
+    "telephone": "13616683199"
   },
   {
     "name": "蚝釜记雅乐里店",
     "category": [
-      "生蚝",
-      "海鲜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -180,7 +188,7 @@
         20.0245
       ]
     },
-    "address": "海口市美兰区国兴大道雅乐里商业街三层S-302商铺",
+    "address": "美园路雅乐里N-160铺面椰谷鸡",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -189,13 +197,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66174b0b8bfd52ecde3",
-    "telephone": "18889151528"
+    "telephone": "18289326282"
   },
   {
     "name": "拾惠靓汤燕兴城店",
     "category": [
-      "靓汤",
-      "滋补汤"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -213,13 +222,12 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66174b0b8bfd52ecde4",
-    "telephone": "0898-66258818"
+    "telephone": "13907569271;17733183366"
   },
   {
     "name": "蚝侠大排档青年路店",
     "category": [
       "大排档",
-      "生蚝",
       "海鲜"
     ],
     "location": {
@@ -243,8 +251,9 @@
   {
     "name": "美苑五香羊肉店",
     "category": [
-      "羊肉",
-      "本地菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -253,7 +262,7 @@
         20.0261
       ]
     },
-    "address": "海口市美兰区美苑路(近国兴大道)",
+    "address": "美苑路下贤一村85号",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -262,14 +271,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66174b0b8bfd52ecde6",
-    "telephone": "0898-65355555"
+    "telephone": "13976563093"
   },
   {
     "name": "金顺来鲜鱼馆美苑路店",
     "category": [
-      "鱼",
-      "海鲜",
-      "本地菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -278,7 +287,7 @@
         20.0269
       ]
     },
-    "address": "海口市美兰区美苑路(近青年路)",
+    "address": "青年路下贤一村140-8号青年路下贤一村140-3号",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -287,14 +296,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66174b0b8bfd52ecde7",
-    "telephone": "13307511111"
+    "telephone": "0898-65319829"
   },
   {
     "name": "和丰永发乳羊庄美苑路店",
     "category": [
-      "乳羊",
-      "烤羊",
-      "本地菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -303,7 +312,7 @@
         20.0273
       ]
     },
-    "address": "海口市美兰区美苑路(近文明东路)",
+    "address": "泰华路2号",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -312,13 +321,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66174b0b8bfd52ecde8",
-    "telephone": "13976622222"
+    "telephone": "0898-66556659"
   },
   {
     "name": "龙义鸡饭店",
     "category": [
-      "海南鸡饭",
-      "本地菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -327,7 +337,7 @@
         20.0295
       ]
     },
-    "address": "海口市美兰区义龙西路",
+    "address": "龙舌坡179号",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -336,13 +346,14 @@
     "is_verified": true,
     "district": "美兰区",
     "_id": "69b8b66174b0b8bfd52ecde9",
-    "telephone": "0898-66778899"
+    "telephone": "17789793828"
   },
   {
     "name": "福杰饭店",
     "category": [
-      "家常菜",
-      "本地菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -360,13 +371,14 @@
     "is_verified": true,
     "district": "琼山区",
     "_id": "69b8b66174b0b8bfd52ecdea",
-    "telephone": "0898-65881234"
+    "telephone": "18889995665"
   },
   {
     "name": "万香鸡饭店",
     "category": [
-      "海南鸡饭",
-      "本地菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -375,7 +387,7 @@
         20.0038
       ]
     },
-    "address": "海口市琼山区红城湖路红城一品",
+    "address": "府城街道办朱云路66号鼎湖金汇12-13一层",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -384,14 +396,16 @@
     "is_verified": true,
     "district": "琼山区",
     "_id": "69b8b66174b0b8bfd52ecdeb",
-    "telephone": "0898-65801122"
+    "telephone": "13518082821"
   },
   {
     "name": "五指山野菜乡兴丹路店",
     "category": [
-      "野菜",
-      "健康菜",
-      "本地菜"
+      "风景名胜",
+      "风景名胜",
+      "风景名胜|餐饮服务",
+      "餐饮相关场所",
+      "餐饮相关"
     ],
     "location": {
       "type": "Point",
@@ -400,7 +414,7 @@
         20.0056
       ]
     },
-    "address": "海口市琼山区兴丹路12号兴丹路与海府路交口",
+    "address": "兴丹二街省农业科学院商业街6-7号",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -409,13 +423,14 @@
     "is_verified": true,
     "district": "琼山区",
     "_id": "69b8b66174b0b8bfd52ecdec",
-    "telephone": "0898-65352222"
+    "telephone": "13976505565"
   },
   {
     "name": "厨房好味兴丹路店",
     "category": [
-      "家常菜",
-      "本地菜"
+      "餐饮服务",
+      "餐饮相关场所",
+      "餐饮相关"
     ],
     "location": {
       "type": "Point",
@@ -424,7 +439,7 @@
         20.0061
       ]
     },
-    "address": "海口市琼山区兴丹路与红城湖路交叉口",
+    "address": "兴丹路14号省农科院拐角处2-3层",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -433,14 +448,14 @@
     "is_verified": true,
     "district": "琼山区",
     "_id": "69b8b66174b0b8bfd52ecded",
-    "telephone": "0898-65231212"
+    "telephone": "0898-65565678"
   },
   {
     "name": "炳霖猪肚包鸡金鹿城店",
     "category": [
-      "猪肚鸡",
-      "汤锅",
-      "本地菜"
+      "餐饮服务",
+      "餐饮相关场所",
+      "餐饮相关"
     ],
     "location": {
       "type": "Point",
@@ -449,7 +464,7 @@
         20.0078
       ]
     },
-    "address": "海口市琼山区海府路金鹿城三楼",
+    "address": "国兴街道办海府路168号金鹿城3楼303号铺",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -458,14 +473,14 @@
     "is_verified": true,
     "district": "琼山区",
     "_id": "69b8b66174b0b8bfd52ecdee",
-    "telephone": "0898-65311122"
+    "telephone": "0898-68644813"
   },
   {
     "name": "琼菜之家金鹿城店",
     "category": [
-      "琼菜",
-      "海南菜",
-      "本地菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -474,7 +489,7 @@
         20.0084
       ]
     },
-    "address": "海口市琼山区海府路168号金鹿花园",
+    "address": "海府路168号金鹿花园三期4栋琼菜之家",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -483,13 +498,14 @@
     "is_verified": true,
     "district": "琼山区",
     "_id": "69b8b66174b0b8bfd52ecdef",
-    "telephone": "0898-65233333"
+    "telephone": "13976892880;15289899585"
   },
   {
     "name": "大水车公馆",
     "category": [
-      "家常菜",
-      "本地菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -498,7 +514,7 @@
         20.0441
       ]
     },
-    "address": "海口市龙华区椰海大道大水车公馆",
+    "address": "城西镇海垦南路7号",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -507,13 +523,14 @@
     "is_verified": true,
     "district": "龙华区",
     "_id": "69b8b66274b0b8bfd52ecdf0",
-    "telephone": "0898-66668888"
+    "telephone": "0898-36398666"
   },
   {
     "name": "万州情餐馆昌茂花园店",
     "category": [
-      "重庆菜",
-      "万州菜"
+      "餐饮服务",
+      "餐饮相关场所",
+      "餐饮相关"
     ],
     "location": {
       "type": "Point",
@@ -522,7 +539,7 @@
         20.0489
       ]
     },
-    "address": "海口市龙华区坡巷路昌茂花园(西门)",
+    "address": "南沙路37号(昌茂花园内)",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -531,14 +548,14 @@
     "is_verified": true,
     "district": "龙华区",
     "_id": "69b8b66274b0b8bfd52ecdf1",
-    "telephone": "18889151528"
+    "telephone": "13976283877;13976667705;17821536394"
   },
   {
     "name": "石山乳羊第一家",
     "category": [
-      "乳羊",
-      "烤羊",
-      "石山菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -547,7 +564,7 @@
         20.0123
       ]
     },
-    "address": "海口市龙华区南海大道四季华庭入口",
+    "address": "南海大道国度建材城二期2层",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -556,13 +573,14 @@
     "is_verified": true,
     "district": "龙华区",
     "_id": "69b8b66274b0b8bfd52ecdf2",
-    "telephone": "0898-66892108"
+    "telephone": "0898-32199966"
   },
   {
     "name": "文昌阿德猪脚饭",
     "category": [
-      "猪脚饭",
-      "文昌菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -571,7 +589,7 @@
         20.0512
       ]
     },
-    "address": "秀英时代广场西2楼(海口港对面)",
+    "address": "滨海大道161秀英时代广场F2层",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -580,13 +598,14 @@
     "is_verified": true,
     "district": "秀英区",
     "_id": "69b8b66274b0b8bfd52ecdf3",
-    "telephone": "13876366059"
+    "telephone": "13876808559"
   },
   {
     "name": "昌江乌烈乳羊店秀英店",
     "category": [
-      "乳羊",
-      "昌江菜"
+      "餐饮服务",
+      "中餐厅",
+      "中餐厅"
     ],
     "location": {
       "type": "Point",
@@ -595,7 +614,7 @@
         20.0478
       ]
     },
-    "address": "海口市坡巷路城金农贸市场(昌江三得)",
+    "address": "丘海一横路滨景花园北21栋梦幻园附近",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -604,14 +623,14 @@
     "is_verified": true,
     "district": "秀英区",
     "_id": "69b8b66274b0b8bfd52ecdf4",
-    "telephone": "0898-66721855"
+    "telephone": "0898-32684865;13518058276"
   },
   {
     "name": "鸽蟹粥平价大排档",
     "category": [
-      "海鲜粥",
-      "螃蟹",
-      "大排档"
+      "餐饮服务",
+      "中餐厅",
+      "特色/地方风味餐厅"
     ],
     "location": {
       "type": "Point",
@@ -620,7 +639,7 @@
         20.0467
       ]
     },
-    "address": "海口市秀英区海秀西路(海陆欧阳蟹粥)",
+    "address": "白龙街道青年路与美苑路交叉路口",
     "images": [],
     "price_per_person": null,
     "opening_hours": null,
@@ -629,6 +648,6 @@
     "is_verified": true,
     "district": "秀英区",
     "_id": "69b8b66274b0b8bfd52ecdf5",
-    "telephone": "0898-66223344"
+    "telephone": "13700487757;15091956260"
   }
 ]
