@@ -12,6 +12,7 @@ export default function MapPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [favoriteIds, setFavoriteIds] = useState<string[]>(() => {
     const saved = localStorage.getItem('haikou_yummy_favorites');
     return saved ? JSON.parse(saved) : [];
@@ -46,6 +47,14 @@ export default function MapPage() {
     fetchData();
   }, []);
 
+  // Debouncing search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (!(e.target as HTMLElement).closest('.search-container')) {
@@ -61,13 +70,40 @@ export default function MapPage() {
     setShowSuggestions(false);
   }, []);
 
-  const categories = ['海南粉', '清补凉', '糟粕醋', '老爸茶', '海鲜', '火锅', '甜品'];
+  // Calculate top 3 categories from verified restaurants
+  const topCategories = (() => {
+    const verified = restaurants.filter(r => r.is_verified !== false);
+    const counts: { [key: string]: number } = {};
+    verified.forEach(r => {
+      r.category?.forEach(cat => {
+        counts[cat] = (counts[cat] || 0) + 1;
+      });
+    });
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(entry => entry[0]);
+  })();
+
+  const highlightMatches = (text: string, query: string) => {
+    if (!query) return text;
+    const parts = text.split(new RegExp(`(${query})`, 'gi'));
+    return (
+      <span className="truncate">
+        {parts.map((part, i) => 
+          part.toLowerCase() === query.toLowerCase() 
+            ? <span key={i} className="text-tesla-red font-black">{part}</span> 
+            : <span key={i}>{part}</span>
+        )}
+      </span>
+    );
+  };
 
   const filteredRestaurants = restaurants.filter(rest => {
-    const matchesSearch = !searchQuery || 
-      rest.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      rest.address?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      rest.category?.some(c => c.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesSearch = !debouncedSearchQuery || 
+      rest.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+      rest.address?.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+      rest.category?.some(c => c.toLowerCase().includes(debouncedSearchQuery.toLowerCase()));
     
     const matchesCategory = !activeCategory || 
       rest.category?.includes(activeCategory);
@@ -75,7 +111,7 @@ export default function MapPage() {
     return matchesSearch && matchesCategory;
   });
 
-  const suggestions = searchQuery.length > 1 
+  const suggestions = searchQuery.length > 0 
     ? restaurants
         .filter(r => r.is_verified !== false && r.name.toLowerCase().includes(searchQuery.toLowerCase()))
         .slice(0, 5)
@@ -141,9 +177,11 @@ export default function MapPage() {
                     <button
                       key={s._id}
                       onClick={() => handleSelectRestaurant(s)}
-                      className="w-full text-left px-4 py-2.5 hover:bg-tesla-red/10 flex flex-col transition-colors border-b border-tesla-gray/10 last:border-none"
+                      className="w-full text-left px-4 py-2.5 hover:bg-tesla-red/10 flex flex-col transition-colors border-b border-tesla-gray/10 last:border-none group"
                     >
-                      <span className="text-sm font-bold text-white">{s.name}</span>
+                      <span className="text-sm font-bold text-white group-hover:text-tesla-red transition-colors">
+                        {highlightMatches(s.name, searchQuery)}
+                      </span>
                       <span className="text-[10px] text-tesla-muted truncate">{s.address || '海口市'}</span>
                     </button>
                   ))}
@@ -163,7 +201,7 @@ export default function MapPage() {
               >
                 All
               </button>
-              {categories.map(cat => (
+              {topCategories.map(cat => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat === activeCategory ? null : cat)}
