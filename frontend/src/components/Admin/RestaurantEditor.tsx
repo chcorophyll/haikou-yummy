@@ -13,6 +13,7 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
   const [formData, setFormData] = useState<Partial<Restaurant>>({});
   const [saving, setSaving] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (restaurant) {
@@ -27,13 +28,18 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
         location: { type: 'Point', coordinates: [110.3294, 20.0174] }
       });
     }
+    setError(null);
   }, [restaurant, isOpen]);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name) return;
+    if (!formData.name?.trim()) {
+      setError('请输入饭店名称，以便我们为您匹配精准信息');
+      return;
+    }
+    setError(null);
     
     setSaving(true);
     try {
@@ -84,6 +90,7 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
                   coordinates: [poi.location.lng, poi.location.lat]
                 }
               }));
+              setError(null);
             }
             resolve();
           });
@@ -133,10 +140,13 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
               <div className="flex gap-2">
                 <input 
                   type="text" 
-                  className="flex-1 bg-tesla-black border border-tesla-gray/30 rounded-xl px-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all"
+                  className={`flex-1 bg-tesla-black border ${error ? 'border-tesla-red animate-shake' : 'border-tesla-gray/30'} rounded-xl px-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all placeholder:text-tesla-gray/50`}
                   value={formData.name || ''}
-                  onChange={e => setFormData({...formData, name: e.target.value})}
-                  required
+                  onChange={e => {
+                    setFormData({...formData, name: e.target.value});
+                    if (error) setError(null);
+                  }}
+                  placeholder="店名 (必填)"
                 />
                 <button
                   type="button"
@@ -148,6 +158,7 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
                   {isFetching ? <Loader2 size={16} className="animate-spin" /> : <MapPin size={16} />}
                 </button>
               </div>
+              {error && <p className="text-tesla-red text-[10px] uppercase tracking-widest ml-1 animate-in fade-in slide-in-from-top-1">{error}</p>}
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-tesla-muted uppercase tracking-widest ml-1">联系电话</label>
