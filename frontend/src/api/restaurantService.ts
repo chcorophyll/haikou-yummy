@@ -46,4 +46,37 @@ export const restaurantService = {
     const response = await apiClient.get<Restaurant>(`/restaurants/${id}`);
     return response.data;
   },
+
+  /**
+   * 更新餐厅信息
+   */
+  async updateRestaurant(id: string, data: Partial<Restaurant>): Promise<Restaurant> {
+    const response = await apiClient.put<Restaurant>(`/restaurants/${id}`, data);
+    return response.data;
+  },
+
+  /**
+   * 快速审核餐厅
+   */
+  async verifyRestaurant(id: string, verified: boolean): Promise<Restaurant> {
+    const response = await apiClient.patch<Restaurant>(`/restaurants/${id}/verify`, null, {
+      params: { verified }
+    });
+    return response.data;
+  },
+
+  /**
+   * 删除餐厅
+   */
+  async deleteRestaurant(id: string): Promise<void> {
+    await apiClient.delete(`/restaurants/${id}`);
+  },
+
+  /**
+   * 新增餐厅
+   */
+  async createRestaurant(data: Partial<Restaurant>): Promise<Restaurant> {
+    const response = await apiClient.post<Restaurant>('/restaurants/', data);
+    return response.data;
+  },
 };

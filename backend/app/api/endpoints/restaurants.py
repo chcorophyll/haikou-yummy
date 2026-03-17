@@ -87,3 +87,52 @@ async def get_restaurant(restaurant_id: str):
         document["_id"] = str(document["_id"])
         return RestaurantInDB(**document)
     raise HTTPException(status_code=404, detail="餐厅不存在")
+
+@router.put("/{restaurant_id}", response_model=RestaurantInDB)
+async def update_restaurant(restaurant_id: str, restaurant: RestaurantCreate):
+    collection = get_restaurant_collection()
+    try:
+        obj_id = ObjectId(restaurant_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="ID 格式无效")
+    
+    update_data = restaurant.model_dump()
+    result = await collection.update_one({"_id": obj_id}, {"$set": update_data})
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="餐厅不存在")
+        
+    updated_doc = await collection.find_one({"_id": obj_id})
+    updated_doc["_id"] = str(updated_doc["_id"])
+    return RestaurantInDB(**updated_doc)
+
+@router.patch("/{restaurant_id}/verify", response_model=RestaurantInDB)
+async def verify_restaurant(restaurant_id: str, verified: bool = Query(...)):
+    collection = get_restaurant_collection()
+    try:
+        obj_id = ObjectId(restaurant_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="ID 格式无效")
+    
+    result = await collection.update_one({"_id": obj_id}, {"$set": {"is_verified": verified}})
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="餐厅不存在")
+        
+    updated_doc = await collection.find_one({"_id": obj_id})
+    updated_doc["_id"] = str(updated_doc["_id"])
+    return RestaurantInDB(**updated_doc)
+
+@router.delete("/{restaurant_id}", status_code=204)
+async def delete_restaurant(restaurant_id: str):
+    collection = get_restaurant_collection()
+    try:
+        obj_id = ObjectId(restaurant_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="ID 格式无效")
+    
+    result = await collection.delete_one({"_id": obj_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="餐厅不存在")
+    return None
