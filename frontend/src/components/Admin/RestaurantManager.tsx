@@ -8,6 +8,7 @@ export default function RestaurantManager() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   
   // Collapsible state
@@ -35,6 +36,28 @@ export default function RestaurantManager() {
   useEffect(() => {
     fetchRestaurants();
   }, []);
+
+  // Search Debouncing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  const highlightText = (text: string, query: string) => {
+    if (!query) return text;
+    const parts = text.split(new RegExp(`(${query})`, 'gi'));
+    return (
+      <>
+        {parts.map((part, i) => 
+          part.toLowerCase() === query.toLowerCase() 
+            ? <span key={i} className="text-tesla-red bg-tesla-red/10 px-0.5 rounded font-black">{part}</span> 
+            : <span key={i}>{part}</span>
+        )}
+      </>
+    );
+  };
 
   const toggleSection = (section: string) => {
     setExpandedSections(prev => ({
@@ -86,8 +109,8 @@ export default function RestaurantManager() {
   };
 
   const filtered = restaurants.filter(r => 
-    r.name.toLowerCase().includes(search.toLowerCase()) ||
-    r.address?.toLowerCase().includes(search.toLowerCase())
+    r.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+    r.address?.toLowerCase().includes(debouncedSearch.toLowerCase())
   );
 
   const unverifiedList = filtered.filter(r => !r.is_verified);
@@ -155,6 +178,8 @@ export default function RestaurantManager() {
                   handleToggleVerify={handleToggleVerify}
                   handleDelete={handleDelete}
                   onEdit={(rest: Restaurant) => { setEditingRestaurant(rest); setIsEditorOpen(true); }}
+                  highlightText={highlightText}
+                  searchQuery={debouncedSearch}
                 />
               </div>
             )}
@@ -183,14 +208,29 @@ export default function RestaurantManager() {
                   handleToggleVerify={handleToggleVerify}
                   handleDelete={handleDelete}
                   onEdit={(rest: Restaurant) => { setEditingRestaurant(rest); setIsEditorOpen(true); }}
+                  highlightText={highlightText}
+                  searchQuery={debouncedSearch}
                 />
               </div>
             )}
           </div>
 
           {filtered.length === 0 && (
-            <div className="py-20 text-center text-tesla-muted text-xs uppercase tracking-widest">
-              未找到匹配的餐厅
+            <div className="py-20 flex flex-col items-center justify-center text-center space-y-4">
+              <div className="w-16 h-16 bg-tesla-gray/10 rounded-full flex items-center justify-center border border-tesla-gray/20">
+                <Search size={24} className="text-tesla-muted" />
+              </div>
+              <div>
+                <p className="text-tesla-muted text-xs uppercase tracking-widest">未找到匹配的餐厅</p>
+                {search && (
+                  <button 
+                    onClick={() => setSearch('')}
+                    className="mt-4 text-tesla-red hover:text-white text-[10px] font-bold uppercase tracking-tighter border-b border-tesla-red/30 hover:border-white transition-all pb-0.5"
+                  >
+                    清除搜索条件
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -206,7 +246,7 @@ export default function RestaurantManager() {
   );
 }
 
-function RestaurantTable({ list, actionLoading, handleToggleVerify, handleDelete, onEdit }: any) {
+function RestaurantTable({ list, actionLoading, handleToggleVerify, handleDelete, onEdit, highlightText, searchQuery }: any) {
   if (list.length === 0) {
     return (
       <div className="py-12 text-center text-tesla-muted text-[10px] uppercase tracking-widest border-t border-tesla-gray/10">
@@ -230,7 +270,9 @@ function RestaurantTable({ list, actionLoading, handleToggleVerify, handleDelete
         {list.map((rest: Restaurant) => (
           <tr key={rest._id} className="hover:bg-tesla-red/5 transition-colors group">
             <td className="px-6 py-5">
-              <div className="font-bold text-white group-hover:text-tesla-red transition-colors">{rest.name}</div>
+              <div className="font-bold text-white group-hover:text-tesla-red transition-colors">
+                {highlightText(rest.name, searchQuery)}
+              </div>
               <div className="text-[10px] text-tesla-muted font-mono mt-1">{rest._id}</div>
             </td>
             <td className="px-6 py-5">
@@ -241,7 +283,9 @@ function RestaurantTable({ list, actionLoading, handleToggleVerify, handleDelete
               </div>
             </td>
             <td className="px-6 py-5">
-              <div className="max-w-[200px] truncate text-tesla-muted italic">{rest.address || '暂无地址'}</div>
+              <div className="max-w-[200px] truncate text-tesla-muted italic">
+                {rest.address ? highlightText(rest.address, searchQuery) : '暂无地址'}
+              </div>
             </td>
             <td className="px-6 py-5">
               <button 
