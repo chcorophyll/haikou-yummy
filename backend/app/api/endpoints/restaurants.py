@@ -26,10 +26,18 @@ async def create_restaurant(restaurant: RestaurantCreate):
     return RestaurantInDB(**created_restaurant)
 
 @router.get("/", response_model=List[RestaurantInDB])
-async def list_restaurants(limit: int = 100, skip: int = 0):
+async def list_restaurants(
+    limit: int = 100, 
+    skip: int = 0,
+    q: str = Query(None, description="搜索餐厅名称 (Search by restaurant name)")
+):
     collection = get_restaurant_collection()
+    query = {}
+    if q:
+        query["name"] = {"$regex": q, "$options": "i"}
+        
     restaurants = []
-    cursor = collection.find({}).skip(skip).limit(limit)
+    cursor = collection.find(query).skip(skip).limit(limit)
     async for document in cursor:
         document["_id"] = str(document["_id"])
         restaurants.append(RestaurantInDB(**document))

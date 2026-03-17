@@ -35,6 +35,11 @@ async def fetch_amap_data(client: httpx.AsyncClient, name: str) -> Optional[Dict
         if data.get("status") == "1" and data.get("pois"):
             poi = data["pois"][0]
             
+            # Ensure it's in Haikou
+            if "海口" not in poi.get("cityname", ""):
+                print(f"      [!] POI {name} is in {poi.get('cityname')}, skipping.")
+                return None
+
             # Extract image
             image_url = DEFAULT_IMAGE_URL
             photos = poi.get("photos", [])
@@ -46,6 +51,8 @@ async def fetch_amap_data(client: httpx.AsyncClient, name: str) -> Optional[Dict
                 "telephone": poi.get("tel", ""),
                 "category": poi.get("type", "").split(";"),
                 "image_url": image_url,
+                "location": poi.get("location", ""), # Format: "lng,lat"
+                "district": poi.get("adname", ""), # District name
                 "source": "amap"
             }
     except Exception as e:
@@ -119,24 +126,55 @@ async def enrich_data():
             
             if result:
                 # Update local dict (Always overwrite)
-                rest["address"] = result.get("address", rest.get("address", ""))
+                raw_address = result.get("address", rest.get("address", ""))
+                if isinstance(raw_address, list):
+                    rest["address"] = ", ".join(raw_address) if raw_address else ""
+                else:
+                    rest["address"] = str(raw_address)
+                
                 rest["telephone"] = result.get("telephone", rest.get("telephone", ""))
                 rest["category"] = result.get("category", rest.get("category", []))
                 rest["images"] = [result["image_url"]] if result.get("image_url") else [DEFAULT_IMAGE_URL]
+                rest["district"] = result.get("district", rest.get("district", ""))
                 
+                # Update Coordinates if available
+                if result.get("location"):
+                    try:
+                        lng_str, lat_str = result["location"].split(",")
+                        lng, lat = float(lng_str), float(lat_str)
+                        
+                        # Bounding box check for Haikou land area
+                        # Rough bounds: Lng 110.1-110.6, Lat 19.8-20.1
+                        if 110.1 <= lng <= 110.6 and 19.8 <= lat <= 20.1:
+                            old_loc = rest.get("location", {}).get("coordinates", [])
+                            new_loc = [lng, lat]
+                            if old_loc != new_loc:
+                                print(f"    [↑] Location shift: {old_loc} -> {new_loc}")
+                            
+                            rest["location"] = {
+                                "type": "Point",
+                                "coordinates": new_loc
+                            }
+                        else:
+                            print(f"    [!] Coordinate {lng},{lat} out of Haikou land bounds, skipping location update.")
+                    except Exception as e:
+                        print(f"    [!] Coordinate parse error for {name}: {e}")
+
                 # Update MongoDB
                 update_data = {
                     "address": rest["address"],
                     "telephone": rest["telephone"],
                     "category": rest["category"],
-                    "images": rest["images"]
+                    "images": rest["images"],
+                    "location": rest.get("location"),
+                    "district": rest.get("district")
                 }
                 
                 await collection.update_one(
                     {"name": name},
                     {"$set": update_data}
                 )
-                print(f"    [✓] Refined from {result.get('source', 'unknown')}. Image set.")
+                print(f"    [✓] Refined from {result.get('source', 'unknown')}.")
             else:
                 print(f"    [x] No source found for {name}. Setting default image.")
                 rest["images"] = [DEFAULT_IMAGE_URL]

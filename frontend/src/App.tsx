@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Search, Map as MapIcon, Menu } from 'lucide-react';
 import MapContainer from './components/Map/MapContainer';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -10,6 +10,21 @@ function App() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [favoriteIds, setFavoriteIds] = useState<string[]>(() => {
+    const saved = localStorage.getItem('haikou_yummy_favorites');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('haikou_yummy_favorites', JSON.stringify(favoriteIds));
+  }, [favoriteIds]);
+
+  const handleToggleFavorite = useCallback((id: string) => {
+    setFavoriteIds(prev => 
+      prev.includes(id) ? prev.filter(fid => fid !== id) : [...prev, id]
+    );
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,11 +42,23 @@ function App() {
     fetchData();
   }, []);
 
-  const handleSelectRestaurant = (restaurant: Restaurant) => {
-    setSelectedId(restaurant._id);
-    // If we are on small screens, we might want to switch tabs or views, 
-    // but for the desktop layout, both are visible.
-  };
+  const handleSelectRestaurant = useCallback((restaurant: Restaurant | null) => {
+    setSelectedId(restaurant ? restaurant._id : null);
+  }, []);
+
+  const handleSearch = useCallback(async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      try {
+        setLoading(true);
+        const data = await restaurantService.listRestaurants(100, 0, searchQuery);
+        setRestaurants(data);
+      } catch (error) {
+        console.error('Search failed:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  }, [searchQuery]);
 
   return (
     <div className="h-screen w-full flex flex-col md:flex-row bg-tesla-dark overflow-hidden font-sans text-tesla-light selection:bg-tesla-red selection:text-white">
@@ -55,6 +82,8 @@ function App() {
           restaurants={restaurants} 
           onSelectRestaurant={handleSelectRestaurant}
           selectedRestaurantId={selectedId}
+          favoriteIds={favoriteIds}
+          onToggleFavorite={handleToggleFavorite}
         />
 
         {/* Floating Search Bar (Desktop) */}
@@ -65,6 +94,9 @@ function App() {
               type="text" 
               placeholder="搜索海口的美食、店铺或地址..."
               className="bg-transparent border-none outline-none ml-3 flex-1 text-white placeholder-tesla-muted text-sm"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearch}
             />
           </div>
         </div>
@@ -86,6 +118,8 @@ function App() {
         restaurants={restaurants}
         onSelectRestaurant={handleSelectRestaurant}
         selectedRestaurantId={selectedId}
+        favoriteIds={favoriteIds}
+        onToggleFavorite={handleToggleFavorite}
       />
       
     </div>

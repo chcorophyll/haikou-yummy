@@ -14,9 +14,9 @@ export const restaurantService = {
   /**
    * 获取所有餐厅列表
    */
-  async listRestaurants(limit: number = 100, skip: number = 0): Promise<Restaurant[]> {
+  async listRestaurants(limit: number = 100, skip: number = 0, search?: string): Promise<Restaurant[]> {
     const response = await apiClient.get<Restaurant[]>('/restaurants/', {
-      params: { limit, skip },
+      params: { limit, skip, q: search },
     });
     return response.data;
   },

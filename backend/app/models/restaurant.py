@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, HttpUrl, ConfigDict
+from pydantic import BaseModel, Field, HttpUrl, ConfigDict, field_validator
 from typing import List, Optional, Any
 
 class GeoJSONPoint(BaseModel):
@@ -16,6 +16,14 @@ class RestaurantBase(BaseModel):
     rating: Optional[float] = Field(None, ge=0.0, le=5.0, description="Rating from 0.0 to 5.0")
     source: str = Field("pgc", description="Source of the data: pgc, crawler, or ugc")
     is_verified: bool = Field(False, description="Whether the restaurant is verified by admin")
+    telephone: Optional[str] = Field(None, description="Contact phone number")
+
+    @field_validator('address', mode='before')
+    @classmethod
+    def validate_address(cls, v: Any) -> Optional[str]:
+        if isinstance(v, list):
+            return ", ".join(v) if v else None
+        return v
 
 class RestaurantCreate(RestaurantBase):
     pass

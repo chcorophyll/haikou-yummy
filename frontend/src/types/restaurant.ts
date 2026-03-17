@@ -15,6 +15,7 @@ export interface Restaurant {
   rating?: number;
   source: string;
   is_verified: boolean;
+  telephone?: string;
 }
 
 export interface RestaurantCreate extends Omit<Restaurant, '_id'> {}

@@ -1,5 +1,6 @@
 [
   {
+    "_id": "69b8b66074b0b8bfd52ecddc",
     "name": "鸿运饭店",
     "category": [
       "餐饮服务",
@@ -9,8 +10,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3556,
-        20.0271
+        110.357445,
+        20.039311
       ]
     },
     "address": "白龙街道美舍路181号",
@@ -23,10 +24,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66074b0b8bfd52ecddc",
     "telephone": "13976111864"
   },
   {
+    "_id": "69b8b66074b0b8bfd52ecddd",
     "name": "鸭你吃美食大院",
     "category": [
       "餐饮服务",
@@ -36,8 +37,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3579,
-        20.0285
+        110.35993,
+        20.042269
       ]
     },
     "address": "海南省海口市美兰区白龙北路26号A113号场地",
@@ -50,10 +51,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66074b0b8bfd52ecddd",
     "telephone": "13098966577"
   },
   {
+    "_id": "69b8b66074b0b8bfd52ecdde",
     "name": "金地骨汤美苑路店",
     "category": [
       "餐饮服务",
@@ -63,8 +64,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3541,
-        20.0265
+        110.37237,
+        20.032818
       ]
     },
     "address": "美苑路80号",
@@ -77,10 +78,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66074b0b8bfd52ecdde",
     "telephone": "18189873566"
   },
   {
+    "_id": "69b8b66074b0b8bfd52ecddf",
     "name": "富乐鸡饭店五指山路店",
     "category": [
       "餐饮服务",
@@ -90,8 +91,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3612,
-        20.0341
+        110.346459,
+        20.031734
       ]
     },
     "address": "五指山路5松涛大厦",
@@ -104,10 +105,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66074b0b8bfd52ecddf",
     "telephone": "0898-66722592"
   },
   {
+    "_id": "69b8b66074b0b8bfd52ecde0",
     "name": "小鲜灶铁锅坊",
     "category": [
       "餐饮服务",
@@ -117,8 +118,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3567,
-        20.0302
+        110.346057,
+        20.03209
       ]
     },
     "address": "五指山路1-号珠江大厦一层A铺面",
@@ -131,10 +132,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66074b0b8bfd52ecde0",
     "telephone": "13654563732"
   },
   {
+    "_id": "69b8b66074b0b8bfd52ecde1",
     "name": "潮欣牛肉店南亚店",
     "category": [
       "餐饮服务",
@@ -144,8 +145,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3623,
-        20.0318
+        110.349475,
+        20.029943
       ]
     },
     "address": "和平南路延长段(龙舌坡路交接处)",
@@ -158,10 +159,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66074b0b8bfd52ecde1",
     "telephone": "0898-65323189;0898-68951883"
   },
   {
+    "_id": "69b8b66074b0b8bfd52ecde2",
     "name": "姥佰娘桫椤湾店",
     "category": [
       "餐饮服务",
@@ -171,8 +172,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3798,
-        20.0412
+        110.375741,
+        20.02016
       ]
     },
     "address": "国兴大道63号桫椤湾娱乐艺术风情街一层3-109",
@@ -185,10 +186,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66074b0b8bfd52ecde2",
     "telephone": "13616683199"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecde3",
     "name": "蚝釜记雅乐里店",
     "category": [
       "餐饮服务",
@@ -198,8 +199,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3512,
-        20.0245
+        110.370542,
+        20.019557
       ]
     },
     "address": "美园路雅乐里N-160铺面椰谷鸡",
@@ -212,10 +213,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66174b0b8bfd52ecde3",
     "telephone": "18289326282"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecde4",
     "name": "拾惠靓汤燕兴城店",
     "category": [
       "餐饮服务",
@@ -225,8 +226,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3634,
-        20.0356
+        110.353782,
+        20.054784
       ]
     },
     "address": "海甸三东路46号燕兴城1楼铺面",
@@ -239,10 +240,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66174b0b8bfd52ecde4",
     "telephone": "13907569271;17733183366"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecde5",
     "name": "蚝侠大排档青年路店",
     "category": [
       "大排档",
@@ -265,10 +266,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66174b0b8bfd52ecde5",
     "telephone": "0898-65388888"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecde6",
     "name": "美苑五香羊肉店",
     "category": [
       "餐饮服务",
@@ -278,8 +279,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3501,
-        20.0261
+        110.372311,
+        20.033694
       ]
     },
     "address": "美苑路下贤一村85号",
@@ -292,10 +293,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66174b0b8bfd52ecde6",
     "telephone": "13976563093"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecde7",
     "name": "金顺来鲜鱼馆美苑路店",
     "category": [
       "餐饮服务",
@@ -305,8 +306,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3523,
-        20.0269
+        110.37237,
+        20.033089
       ]
     },
     "address": "青年路下贤一村140-8号青年路下贤一村140-3号",
@@ -319,10 +320,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66174b0b8bfd52ecde7",
     "telephone": "0898-65319829"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecde8",
     "name": "和丰永发乳羊庄美苑路店",
     "category": [
       "餐饮服务",
@@ -332,8 +333,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3531,
-        20.0273
+        110.324296,
+        20.042402
       ]
     },
     "address": "泰华路2号",
@@ -345,11 +346,11 @@
     "rating": null,
     "source": "manual",
     "is_verified": true,
-    "district": "美兰区",
-    "_id": "69b8b66174b0b8bfd52ecde8",
+    "district": "龙华区",
     "telephone": "0898-66556659"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecde9",
     "name": "龙义鸡饭店",
     "category": [
       "餐饮服务",
@@ -359,8 +360,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3589,
-        20.0295
+        110.353723,
+        20.028929
       ]
     },
     "address": "龙舌坡179号",
@@ -373,10 +374,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "美兰区",
-    "_id": "69b8b66174b0b8bfd52ecde9",
     "telephone": "17789793828"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecdea",
     "name": "福杰饭店",
     "category": [
       "餐饮服务",
@@ -386,11 +387,11 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3869,
-        20.0021
+        110.36901,
+        20.002308
       ]
     },
-    "address": [],
+    "address": "",
     "images": [
       "https://aos-comment.amap.com/B0KKO7MEYN/comment/content_media_external_file_5851_1765270058966_15967452.jpg"
     ],
@@ -400,10 +401,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "琼山区",
-    "_id": "69b8b66174b0b8bfd52ecdea",
     "telephone": "18889995665"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecdeb",
     "name": "万香鸡饭店",
     "category": [
       "餐饮服务",
@@ -413,8 +414,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3891,
-        20.0038
+        110.350022,
+        20.002753
       ]
     },
     "address": "府城街道办朱云路66号鼎湖金汇12-13一层",
@@ -427,10 +428,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "琼山区",
-    "_id": "69b8b66174b0b8bfd52ecdeb",
     "telephone": "13518082821"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecdec",
     "name": "五指山野菜乡兴丹路店",
     "category": [
       "风景名胜",
@@ -442,8 +443,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3915,
-        20.0056
+        110.365949,
+        20.011746
       ]
     },
     "address": "兴丹二街省农业科学院商业街6-7号",
@@ -456,10 +457,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "琼山区",
-    "_id": "69b8b66174b0b8bfd52ecdec",
     "telephone": "13976505565"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecded",
     "name": "厨房好味兴丹路店",
     "category": [
       "餐饮服务",
@@ -469,8 +470,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3923,
-        20.0061
+        110.36619,
+        20.009345
       ]
     },
     "address": "兴丹路14号省农科院拐角处2-3层",
@@ -483,10 +484,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "琼山区",
-    "_id": "69b8b66174b0b8bfd52ecded",
     "telephone": "0898-65565678"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecdee",
     "name": "炳霖猪肚包鸡金鹿城店",
     "category": [
       "餐饮服务",
@@ -496,8 +497,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3945,
-        20.0078
+        110.359265,
+        20.010138
       ]
     },
     "address": "国兴街道办海府路168号金鹿城3楼303号铺",
@@ -510,10 +511,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "琼山区",
-    "_id": "69b8b66174b0b8bfd52ecdee",
     "telephone": "0898-68644813"
   },
   {
+    "_id": "69b8b66174b0b8bfd52ecdef",
     "name": "琼菜之家金鹿城店",
     "category": [
       "餐饮服务",
@@ -523,8 +524,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3956,
-        20.0084
+        110.358882,
+        20.010989
       ]
     },
     "address": "海府路168号金鹿花园三期4栋琼菜之家",
@@ -537,10 +538,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "琼山区",
-    "_id": "69b8b66174b0b8bfd52ecdef",
     "telephone": "13976892880;15289899585"
   },
   {
+    "_id": "69b8b66274b0b8bfd52ecdf0",
     "name": "大水车公馆",
     "category": [
       "餐饮服务",
@@ -550,8 +551,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3156,
-        20.0441
+        110.303727,
+        19.976722
       ]
     },
     "address": "城西镇海垦南路7号",
@@ -564,10 +565,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "龙华区",
-    "_id": "69b8b66274b0b8bfd52ecdf0",
     "telephone": "0898-36398666"
   },
   {
+    "_id": "69b8b66274b0b8bfd52ecdf1",
     "name": "万州情餐馆昌茂花园店",
     "category": [
       "餐饮服务",
@@ -577,8 +578,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.3234,
-        20.0489
+        110.335233,
+        20.010901
       ]
     },
     "address": "南沙路37号(昌茂花园内)",
@@ -591,10 +592,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "龙华区",
-    "_id": "69b8b66274b0b8bfd52ecdf1",
     "telephone": "13976283877;13976667705;17821536394"
   },
   {
+    "_id": "69b8b66274b0b8bfd52ecdf2",
     "name": "石山乳羊第一家",
     "category": [
       "餐饮服务",
@@ -604,8 +605,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.2789,
-        20.0123
+        110.334863,
+        19.996715
       ]
     },
     "address": "南海大道国度建材城二期2层",
@@ -618,10 +619,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "龙华区",
-    "_id": "69b8b66274b0b8bfd52ecdf2",
     "telephone": "0898-32199966"
   },
   {
+    "_id": "69b8b66274b0b8bfd52ecdf3",
     "name": "文昌阿德猪脚饭",
     "category": [
       "餐饮服务",
@@ -631,8 +632,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.2856,
-        20.0512
+        110.282887,
+        20.018498
       ]
     },
     "address": "滨海大道161秀英时代广场F2层",
@@ -645,10 +646,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "秀英区",
-    "_id": "69b8b66274b0b8bfd52ecdf3",
     "telephone": "13876808559"
   },
   {
+    "_id": "69b8b66274b0b8bfd52ecdf4",
     "name": "昌江乌烈乳羊店秀英店",
     "category": [
       "餐饮服务",
@@ -658,8 +659,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.2923,
-        20.0478
+        110.288852,
+        20.015584
       ]
     },
     "address": "丘海一横路滨景花园北21栋梦幻园附近",
@@ -672,10 +673,10 @@
     "source": "manual",
     "is_verified": true,
     "district": "秀英区",
-    "_id": "69b8b66274b0b8bfd52ecdf4",
     "telephone": "0898-32684865;13518058276"
   },
   {
+    "_id": "69b8b66274b0b8bfd52ecdf5",
     "name": "鸽蟹粥平价大排档",
     "category": [
       "餐饮服务",
@@ -685,8 +686,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        110.2901,
-        20.0467
+        110.371772,
+        20.031688
       ]
     },
     "address": "白龙街道青年路与美苑路交叉路口",
@@ -698,8 +699,7 @@
     "rating": null,
     "source": "manual",
     "is_verified": true,
-    "district": "秀英区",
-    "_id": "69b8b66274b0b8bfd52ecdf5",
+    "district": "美兰区",
     "telephone": "13700487757;15091956260"
   }
 ]
