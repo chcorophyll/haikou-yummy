@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { X, Send, MapPin, Store, MessageSquare, Loader2, CheckCircle2 } from 'lucide-react';
 import { restaurantService } from '../../api/restaurantService';
+import { Restaurant } from '../../types/restaurant';
+
+declare global {
+  interface Window {
+    AMap: any;
+  }
+}
 
 interface RestaurantSubmissionProps {
   isOpen: boolean;
@@ -21,15 +28,55 @@ export default function RestaurantSubmission({ isOpen, onClose }: RestaurantSubm
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    
     try {
-      // Create with minimal data, let admin enrich later
-      await restaurantService.createRestaurant({
+      let enrichedData: Partial<Restaurant> = {
         name: formData.name,
         address: formData.address,
         is_verified: false,
         category: ['社区推荐'],
-        location: { type: 'Point', coordinates: [110.3294, 20.0174] } // Default center
-      });
+        location: { type: 'Point', coordinates: [110.3294, 20.0174] } 
+      };
+
+      // Call Amap to enrich data
+      if (window.AMap) {
+        await new Promise<void>((resolve) => {
+          window.AMap.plugin(['AMap.PlaceSearch'], () => {
+            const placeSearch = new window.AMap.PlaceSearch({
+              city: '海口',
+              pageSize: 1,
+              extensions: 'all'
+            });
+
+            placeSearch.search(formData.name, (status: string, result: any) => {
+              if (status === 'complete' && result.poiList && result.poiList.pois.length > 0) {
+                const poi = result.poiList.pois[0];
+                
+                // Align with backend schema and clean data
+                const rawCategories = poi.type ? poi.type.split(';').filter(Boolean) : [];
+                const cleanedCategories = rawCategories.filter((cat: string) => 
+                  !['餐饮服务', '公司企业', '生活服务', '地名地址信息'].includes(cat)
+                );
+
+                enrichedData = {
+                  ...enrichedData,
+                  name: poi.name || formData.name,
+                  address: poi.address ? `海口市${poi.adname || ''}${poi.address}` : formData.address,
+                  telephone: poi.tel ? poi.tel.split(';')[0].split('/')[0] : undefined,
+                  category: cleanedCategories.length > 0 ? cleanedCategories : ['社区推荐'],
+                  location: {
+                    type: 'Point',
+                    coordinates: [poi.location.lng, poi.location.lat]
+                  }
+                };
+              }
+              resolve();
+            });
+          });
+        });
+      }
+
+      await restaurantService.createRestaurant(enrichedData);
       setStep('success');
     } catch (err) {
       console.error('Submission failed', err);
