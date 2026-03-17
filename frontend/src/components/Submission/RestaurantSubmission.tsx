@@ -22,11 +22,17 @@ export default function RestaurantSubmission({ isOpen, onClose }: RestaurantSubm
     address: '',
     reason: ''
   });
+  const [error, setError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.name.trim()) {
+      setError('请输入饭店名称，以便我们为您匹配精准信息');
+      return;
+    }
+    setError(null);
     setLoading(true);
     
     try {
@@ -109,12 +115,15 @@ export default function RestaurantSubmission({ isOpen, onClose }: RestaurantSubm
                 </div>
                 <input 
                   type="text" 
-                  required
                   placeholder="如：美兰区某冷饮店..."
-                  className="w-full bg-tesla-black border border-tesla-gray/30 rounded-2xl px-5 py-4 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all placeholder:text-tesla-gray/50 shadow-inner"
+                  className={`w-full bg-tesla-black border ${error ? 'border-tesla-red animate-shake' : 'border-tesla-gray/30'} rounded-2xl px-5 py-4 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all placeholder:text-tesla-gray/50 shadow-inner`}
                   value={formData.name}
-                  onChange={e => setFormData({...formData, name: e.target.value})}
+                  onChange={e => {
+                    setFormData({...formData, name: e.target.value});
+                    if (error) setError(null);
+                  }}
                 />
+                {error && <p className="text-tesla-red text-[10px] uppercase tracking-widest ml-1 animate-in fade-in slide-in-from-top-1">{error}</p>}
               </div>
 
               <div className="space-y-2">
