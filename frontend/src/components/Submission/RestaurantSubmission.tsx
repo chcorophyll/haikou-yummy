@@ -36,11 +36,14 @@ export default function RestaurantSubmission({ isOpen, onClose }: RestaurantSubm
     setLoading(true);
     
     try {
+      const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200";
+
       let enrichedData: Partial<Restaurant> = {
         name: formData.name,
         address: formData.address,
         is_verified: false,
         category: ['社区推荐'],
+        images: [DEFAULT_IMAGE],
         location: { type: 'Point', coordinates: [110.3294, 20.0174] } 
       };
 
@@ -64,12 +67,17 @@ export default function RestaurantSubmission({ isOpen, onClose }: RestaurantSubm
                   !['餐饮服务', '公司企业', '生活服务', '地名地址信息'].includes(cat)
                 );
 
+                // Extract image
+                const photos = poi.photos || [];
+                const imageUrl = photos.length > 0 ? photos[0].url : DEFAULT_IMAGE;
+
                 enrichedData = {
                   ...enrichedData,
                   name: poi.name || formData.name,
                   address: poi.address ? `海口市${poi.adname || ''}${poi.address}` : formData.address,
                   telephone: poi.tel ? poi.tel.split(';')[0].split('/')[0] : undefined,
                   category: cleanedCategories.length > 0 ? cleanedCategories : ['社区推荐'],
+                  images: [imageUrl],
                   location: {
                     type: 'Point',
                     coordinates: [poi.location.lng, poi.location.lat]

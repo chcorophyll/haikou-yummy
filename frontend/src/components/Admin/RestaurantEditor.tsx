@@ -143,8 +143,11 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-[10px] font-bold text-tesla-muted uppercase tracking-widest ml-1">分类标签 (逗号分隔)</label>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Tag className="text-tesla-red" size={16} />
+              <span className="text-[10px] font-bold text-white uppercase tracking-widest">分类标签 (逗号分隔)</span>
+            </div>
             <input 
               type="text" 
               className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl px-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all"
@@ -152,6 +155,31 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
               onChange={e => setFormData({...formData, category: e.target.value.split(',').map(s => s.trim())})}
               placeholder="例如: 海南粉, 老字号"
             />
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Tag className="text-tesla-red" size={16} />
+              <span className="text-[10px] font-bold text-white uppercase tracking-widest">店面展示图</span>
+            </div>
+            <div className="space-y-3">
+              {formData.images && formData.images.length > 0 && (
+                <div className="relative aspect-video rounded-2xl overflow-hidden border border-tesla-gray/30 group">
+                  <img src={formData.images[0]} alt="Preview" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-tesla-black/60 to-transparent flex items-end p-4">
+                    <span className="text-[10px] text-white font-bold tracking-widest uppercase opacity-70">预览图预览</span>
+                  </div>
+                </div>
+              )}
+              <input 
+                type="text" 
+                className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl px-4 py-3 text-xs text-tesla-red font-mono focus:border-tesla-red outline-none"
+                placeholder="图片 URL 地址"
+                value={formData.images?.[0] || ''}
+                onChange={e => setFormData({...formData, images: [e.target.value]})}
+              />
+              <p className="text-[9px] text-tesla-muted uppercase tracking-tighter ml-1">高德地图 API 封面或外部图片链接</p>
+            </div>
           </div>
         </form>
 
