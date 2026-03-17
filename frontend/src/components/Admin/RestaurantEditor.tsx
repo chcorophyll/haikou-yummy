@@ -12,6 +12,7 @@ interface RestaurantEditorProps {
 export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }: RestaurantEditorProps) {
   const [formData, setFormData] = useState<Partial<Restaurant>>({});
   const [saving, setSaving] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     if (restaurant) {
@@ -22,10 +23,11 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
         address: '',
         telephone: '',
         category: [],
+        images: [],
         location: { type: 'Point', coordinates: [110.3294, 20.0174] }
       });
     }
-  }, [restaurant]);
+  }, [restaurant, isOpen]);
 
   if (!isOpen) return null;
 
@@ -41,6 +43,54 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
       console.error('Save failed', err);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const fetchAmapData = async () => {
+    if (!formData.name?.trim() || !window.AMap) return;
+    
+    setIsFetching(true);
+    try {
+      await new Promise<void>((resolve) => {
+        window.AMap.plugin(['AMap.PlaceSearch'], () => {
+          const placeSearch = new window.AMap.PlaceSearch({
+            city: '海口',
+            pageSize: 1,
+            extensions: 'all'
+          });
+
+          placeSearch.search(formData.name, (status: string, result: any) => {
+            if (status === 'complete' && result.poiList && result.poiList.pois.length > 0) {
+              const poi = result.poiList.pois[0];
+              
+              const rawCategories = poi.type ? poi.type.split(';').filter(Boolean) : [];
+              const cleanedCategories = rawCategories.filter((cat: string) => 
+                !['餐饮服务', '公司企业', '生活服务', '地名地址信息'].includes(cat)
+              );
+
+              const photos = poi.photos || [];
+              const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200";
+              const imageUrl = photos.length > 0 ? photos[0].url : DEFAULT_IMAGE;
+
+              setFormData(prev => ({
+                ...prev,
+                name: poi.name || prev.name,
+                address: poi.address ? `海口市${poi.adname || ''}${poi.address}` : prev.address,
+                telephone: poi.tel ? poi.tel.split(';')[0].split('/')[0] : prev.telephone,
+                category: cleanedCategories.length > 0 ? cleanedCategories : (prev.category || []),
+                images: [imageUrl],
+                location: {
+                  type: 'Point',
+                  coordinates: [poi.location.lng, poi.location.lat]
+                }
+              }));
+            }
+            resolve();
+          });
+        });
+      });
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -80,13 +130,24 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-tesla-muted uppercase tracking-widest ml-1">餐厅名称</label>
-              <input 
-                type="text" 
-                className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl px-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all"
-                value={formData.name || ''}
-                onChange={e => setFormData({...formData, name: e.target.value})}
-                required
-              />
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  className="flex-1 bg-tesla-black border border-tesla-gray/30 rounded-xl px-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all"
+                  value={formData.name || ''}
+                  onChange={e => setFormData({...formData, name: e.target.value})}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={fetchAmapData}
+                  disabled={isFetching || !formData.name}
+                  className="px-3 bg-tesla-gray/20 hover:bg-tesla-red/20 text-tesla-muted hover:text-tesla-red rounded-xl border border-tesla-gray/30 transition-all flex items-center justify-center disabled:opacity-50"
+                  title="从高德地图匹配数据"
+                >
+                  {isFetching ? <Loader2 size={16} className="animate-spin" /> : <MapPin size={16} />}
+                </button>
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-tesla-muted uppercase tracking-widest ml-1">联系电话</label>

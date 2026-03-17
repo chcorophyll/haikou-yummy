@@ -63,7 +63,7 @@ export default function RestaurantManager() {
         const updated = await restaurantService.updateRestaurant(id, data);
         setRestaurants(prev => prev.map(r => r._id === id ? updated : r));
       } else {
-        await restaurantService.createRestaurant(data);
+        await restaurantService.createRestaurant({ ...data, is_verified: true });
         await fetchRestaurants();
       }
     } catch (err) {
@@ -154,7 +154,7 @@ export default function RestaurantManager() {
                   actionLoading={actionLoading}
                   handleToggleVerify={handleToggleVerify}
                   handleDelete={handleDelete}
-                  onEdit={(rest) => { setEditingRestaurant(rest); setIsEditorOpen(true); }}
+                  onEdit={(rest: Restaurant) => { setEditingRestaurant(rest); setIsEditorOpen(true); }}
                 />
               </div>
             )}
@@ -182,7 +182,7 @@ export default function RestaurantManager() {
                   actionLoading={actionLoading}
                   handleToggleVerify={handleToggleVerify}
                   handleDelete={handleDelete}
-                  onEdit={(rest) => { setEditingRestaurant(rest); setIsEditorOpen(true); }}
+                  onEdit={(rest: Restaurant) => { setEditingRestaurant(rest); setIsEditorOpen(true); }}
                 />
               </div>
             )}
