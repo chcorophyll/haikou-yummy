@@ -1,1 +1,608 @@
-[]
+[
+  {
+    "name": "鸿运饭店",
+    "category": [
+      "海南菜",
+      "家常菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3556,
+        20.0271
+      ]
+    },
+    "address": "海口市美兰区美苑路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66074b0b8bfd52ecddc"
+  },
+  {
+    "name": "鸭你吃美食大院",
+    "category": [
+      "烤鸭",
+      "家常菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3579,
+        20.0285
+      ]
+    },
+    "address": "海口市美兰区",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66074b0b8bfd52ecddd"
+  },
+  {
+    "name": "金地骨汤美苑路店",
+    "category": [
+      "骨汤",
+      "汤锅"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3541,
+        20.0265
+      ]
+    },
+    "address": "海口市美兰区美苑路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66074b0b8bfd52ecdde"
+  },
+  {
+    "name": "富乐鸡饭店五指山路店",
+    "category": [
+      "海南鸡饭",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3612,
+        20.0341
+      ]
+    },
+    "address": "海口市美兰区五指山路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66074b0b8bfd52ecddf"
+  },
+  {
+    "name": "小鲜灶铁锅坊",
+    "category": [
+      "铁锅炖",
+      "家常菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3567,
+        20.0302
+      ]
+    },
+    "address": "海口市美兰区",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66074b0b8bfd52ecde0"
+  },
+  {
+    "name": "潮欣牛肉店南亚店",
+    "category": [
+      "牛肉",
+      "潮汕菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3623,
+        20.0318
+      ]
+    },
+    "address": "海口市美兰区南亚路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66074b0b8bfd52ecde1"
+  },
+  {
+    "name": "姥佰娘桫椤湾店",
+    "category": [
+      "海南菜",
+      "家常菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3798,
+        20.0412
+      ]
+    },
+    "address": "海口市美兰区桫椤湾",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66074b0b8bfd52ecde2"
+  },
+  {
+    "name": "蚝釜记雅乐里店",
+    "category": [
+      "生蚝",
+      "海鲜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3512,
+        20.0245
+      ]
+    },
+    "address": "海口市美兰区雅乐里",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66174b0b8bfd52ecde3"
+  },
+  {
+    "name": "拾惠靓汤燕兴城店",
+    "category": [
+      "靓汤",
+      "滋补汤"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3634,
+        20.0356
+      ]
+    },
+    "address": "海口市美兰区燕兴城",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66174b0b8bfd52ecde4"
+  },
+  {
+    "name": "蚝侠大排档青年路店",
+    "category": [
+      "大排档",
+      "生蚝",
+      "海鲜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3548,
+        20.0278
+      ]
+    },
+    "address": "海口市美兰区青年路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66174b0b8bfd52ecde5"
+  },
+  {
+    "name": "美苑五香羊肉店",
+    "category": [
+      "羊肉",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3501,
+        20.0261
+      ]
+    },
+    "address": "海口市美兰区美苑路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66174b0b8bfd52ecde6"
+  },
+  {
+    "name": "金顺来鲜鱼馆美苑路店",
+    "category": [
+      "鱼",
+      "海鲜",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3523,
+        20.0269
+      ]
+    },
+    "address": "海口市美兰区美苑路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66174b0b8bfd52ecde7"
+  },
+  {
+    "name": "和丰永发乳羊庄美苑路店",
+    "category": [
+      "乳羊",
+      "烤羊",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3531,
+        20.0273
+      ]
+    },
+    "address": "海口市美兰区美苑路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66174b0b8bfd52ecde8"
+  },
+  {
+    "name": "龙义鸡饭店",
+    "category": [
+      "海南鸡饭",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3589,
+        20.0295
+      ]
+    },
+    "address": "海口市美兰区",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "美兰区",
+    "_id": "69b8b66174b0b8bfd52ecde9"
+  },
+  {
+    "name": "福杰饭店",
+    "category": [
+      "家常菜",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3869,
+        20.0021
+      ]
+    },
+    "address": "海口市琼山区",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "琼山区",
+    "_id": "69b8b66174b0b8bfd52ecdea"
+  },
+  {
+    "name": "万香鸡饭店",
+    "category": [
+      "海南鸡饭",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3891,
+        20.0038
+      ]
+    },
+    "address": "海口市琼山区",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "琼山区",
+    "_id": "69b8b66174b0b8bfd52ecdeb"
+  },
+  {
+    "name": "五指山野菜乡兴丹路店",
+    "category": [
+      "野菜",
+      "健康菜",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3915,
+        20.0056
+      ]
+    },
+    "address": "海口市琼山区兴丹路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "琼山区",
+    "_id": "69b8b66174b0b8bfd52ecdec"
+  },
+  {
+    "name": "厨房好味兴丹路店",
+    "category": [
+      "家常菜",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3923,
+        20.0061
+      ]
+    },
+    "address": "海口市琼山区兴丹路",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "琼山区",
+    "_id": "69b8b66174b0b8bfd52ecded"
+  },
+  {
+    "name": "炳霖猪肚包鸡金鹿城店",
+    "category": [
+      "猪肚鸡",
+      "汤锅",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3945,
+        20.0078
+      ]
+    },
+    "address": "海口市琼山区金鹿城",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "琼山区",
+    "_id": "69b8b66174b0b8bfd52ecdee"
+  },
+  {
+    "name": "琼菜之家金鹿城店",
+    "category": [
+      "琼菜",
+      "海南菜",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3956,
+        20.0084
+      ]
+    },
+    "address": "海口市琼山区金鹿城",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "琼山区",
+    "_id": "69b8b66174b0b8bfd52ecdef"
+  },
+  {
+    "name": "大水车公馆",
+    "category": [
+      "家常菜",
+      "本地菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3156,
+        20.0441
+      ]
+    },
+    "address": "海口市龙华区",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "龙华区",
+    "_id": "69b8b66274b0b8bfd52ecdf0"
+  },
+  {
+    "name": "万州情餐馆昌茂花园店",
+    "category": [
+      "重庆菜",
+      "万州菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.3234,
+        20.0489
+      ]
+    },
+    "address": "海口市龙华区昌茂花园",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "龙华区",
+    "_id": "69b8b66274b0b8bfd52ecdf1"
+  },
+  {
+    "name": "石山乳羊第一家",
+    "category": [
+      "乳羊",
+      "烤羊",
+      "石山菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.2789,
+        20.0123
+      ]
+    },
+    "address": "海口市龙华区石山镇",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "龙华区",
+    "_id": "69b8b66274b0b8bfd52ecdf2"
+  },
+  {
+    "name": "文昌阿德猪脚饭",
+    "category": [
+      "猪脚饭",
+      "文昌菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.2856,
+        20.0512
+      ]
+    },
+    "address": "海口市秀英区",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "秀英区",
+    "_id": "69b8b66274b0b8bfd52ecdf3"
+  },
+  {
+    "name": "昌江乌烈乳羊店秀英店",
+    "category": [
+      "乳羊",
+      "昌江菜"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.2923,
+        20.0478
+      ]
+    },
+    "address": "海口市秀英区",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "秀英区",
+    "_id": "69b8b66274b0b8bfd52ecdf4"
+  },
+  {
+    "name": "鸽蟹粥平价大排档",
+    "category": [
+      "海鲜粥",
+      "螃蟹",
+      "大排档"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        110.2901,
+        20.0467
+      ]
+    },
+    "address": "海口市秀英区",
+    "images": [],
+    "price_per_person": null,
+    "opening_hours": null,
+    "rating": null,
+    "source": "manual",
+    "is_verified": true,
+    "district": "秀英区",
+    "_id": "69b8b66274b0b8bfd52ecdf5"
+  }
+]
