@@ -43,12 +43,18 @@ PYTHONPATH=. uv run uvicorn app.main:app --reload
 ```
 启动后访问：[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) 查看 Swagger 接口文档。
 
-## 🕸️ 数据清洗与导入
-如果你有新的原始餐厅文本数据，放入 `scripts/raw_data.txt`，然后运行：
-```bash
-PYTHONPATH=. uv run scripts/import_restaurants.py
-```
-*注：该脚本会自动调用腾讯地图 API 补全经纬度并保存至 MongoDB 和本地 JSON。*
+## 🕸️ 数据清洗与抓取
+1. **基础导入**: 将原始文本放入 `scripts/raw_data.txt`，运行：
+   ```bash
+   PYTHONPATH=. uv run scripts/import_restaurants.py
+   ```
+2. **详情补全 (大众点评/人肉搜索模式)**:
+   如果您需要补全地址和电话，可以执行：
+   ```bash
+   # 已集成多源搜索后的补全脚本
+   PYTHONPATH=. uv run scripts/apply_manual_updates.py
+   ```
+*注：该流程已完成对 26 家初始餐厅的详情补全，详细数据见 `scripts/cleaned_restaurants.json`。*
 
 ## 🧪 运行测试
 使用 pytest 执行异步接口测试：
