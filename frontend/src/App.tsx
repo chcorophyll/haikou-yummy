@@ -1,13 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, Map as MapIcon, Menu } from 'lucide-react';
 import MapContainer from './components/Map/MapContainer';
 import Sidebar from './components/Sidebar/Sidebar';
+import { restaurantService } from './api/restaurantService';
+import { Restaurant } from './types/restaurant';
 
 function App() {
   const [activeTab, setActiveTab] = useState('map');
-  const handleMapLoaded = (map: any) => {
-    // You can pan, zoom, or add markers using map here later
-    console.log("Map loaded:", map);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = await restaurantService.listRestaurants();
+        setRestaurants(data);
+      } catch (error) {
+        console.error('Failed to fetch restaurants:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleSelectRestaurant = (restaurant: Restaurant) => {
+    setSelectedId(restaurant._id);
+    // If we are on small screens, we might want to switch tabs or views, 
+    // but for the desktop layout, both are visible.
   };
 
   return (
@@ -19,7 +42,7 @@ function App() {
           <div className="w-8 h-8 flex items-center justify-center bg-tesla-red rounded opacity-90">
             <MapIcon size={20} className="text-white" />
           </div>
-          <h1 className="text-xl font-bold tracking-[0.2em] uppercase text-white">Yummy</h1>
+          <h1 className="text-xl font-bold tracking-[0.2em] uppercase text-white leading-none">Yummy</h1>
         </div>
         <button className="text-tesla-light hover:text-tesla-red transition-colors">
           <Menu size={24} />
@@ -28,7 +51,11 @@ function App() {
 
       {/* Main Map Area */}
       <div className="flex-1 relative z-0">
-        <MapContainer onMapLoaded={handleMapLoaded} />
+        <MapContainer 
+          restaurants={restaurants} 
+          onSelectRestaurant={handleSelectRestaurant}
+          selectedRestaurantId={selectedId}
+        />
 
         {/* Floating Search Bar (Desktop) */}
         <div className="hidden md:block absolute top-6 left-6 right-6 z-10 max-w-md">
@@ -41,10 +68,25 @@ function App() {
             />
           </div>
         </div>
+        
+        {loading && (
+          <div className="absolute inset-0 bg-tesla-dark/50 backdrop-blur-sm z-[150] flex items-center justify-center">
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 border-4 border-tesla-muted border-t-tesla-red rounded-full animate-spin mb-4 shadow-red-glow" />
+              <p className="text-tesla-muted text-sm uppercase tracking-widest animate-pulse">Loading Taste of Haikou...</p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Sidebar Panel */}
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        restaurants={restaurants}
+        onSelectRestaurant={handleSelectRestaurant}
+        selectedRestaurantId={selectedId}
+      />
       
     </div>
   );

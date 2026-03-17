@@ -1,11 +1,21 @@
 import { Compass, User, MapPin } from 'lucide-react';
+import { Restaurant } from '../../types/restaurant';
 
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  restaurants: Restaurant[];
+  onSelectRestaurant: (restaurant: Restaurant) => void;
+  selectedRestaurantId?: string | null;
 }
 
-export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
+export default function Sidebar({ 
+  activeTab, 
+  setActiveTab, 
+  restaurants, 
+  onSelectRestaurant,
+  selectedRestaurantId 
+}: SidebarProps) {
   return (
     <div className="w-full md:w-96 bg-tesla-black border-t md:border-t-0 md:border-l border-tesla-gray flex flex-col z-10 shadow-2xl transition-all duration-300">
       
@@ -44,27 +54,61 @@ export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
       {/* Dynamic Content Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 relative">
         <div className="sticky top-0 bg-tesla-black/90 backdrop-blur-sm z-10 -mx-4 px-4 py-2 border-b border-tesla-gray/30 mb-2">
-           <h2 className="text-xs text-tesla-muted uppercase tracking-[0.2em] font-bold">附近热门</h2>
+           <h2 className="text-xs text-tesla-muted uppercase tracking-[0.2em] font-bold px-2">
+            发现美食 ({restaurants.length})
+           </h2>
         </div>
         
-        {/* Mock Shop Card */}
-        {[1,2,3,4,5].map(i => (
-           <div key={i} className="group flex bg-[#161616] rounded-xl overflow-hidden border border-tesla-gray hover:border-tesla-red/50 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-red-glow">
+        {restaurants.length === 0 && (
+          <div className="text-center py-10">
+            <p className="text-tesla-muted text-sm">正在加载海口美食...</p>
+          </div>
+        )}
+
+        {restaurants.map(rest => (
+           <div 
+            key={rest._id} 
+            onClick={() => onSelectRestaurant(rest)}
+            className={`group flex bg-[#161616] rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer shadow-lg ${
+              selectedRestaurantId === rest._id 
+              ? 'border-tesla-red shadow-red-glow' 
+              : 'border-tesla-gray hover:border-tesla-red/50 hover:shadow-red-glow'
+            }`}
+          >
             <div className="w-28 bg-tesla-gray flex-shrink-0 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
-              <img src={`https://placehold.co/200x200/222/555?text=Img+${i}`} alt="Food" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" />
+              <img 
+                src={rest.images?.[0] || `https://placehold.co/200x200/222/555?text=Img`} 
+                alt={rest.name} 
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" 
+              />
               <div className="absolute top-2 left-2 z-20">
-                <span className="text-[10px] font-bold text-white bg-tesla-red/90 px-1.5 py-0.5 rounded shadow-sm uppercase tracking-wider">Top</span>
+                <span className="text-[10px] font-bold text-white bg-tesla-red/90 px-1.5 py-0.5 rounded shadow-sm uppercase tracking-wider">
+                  {rest.rating || 'New'}
+                </span>
               </div>
             </div>
             <div className="p-3 flex-1 flex flex-col justify-between">
               <div>
-                <h3 className="text-sm font-bold text-white group-hover:text-tesla-red transition-colors duration-300">正宗吴日彪蒜香猪牛排</h3>
-                <p className="text-[11px] text-tesla-muted mt-1 truncate">水巷口街...</p>
+                <h3 className={`text-sm font-bold transition-colors duration-300 ${
+                  selectedRestaurantId === rest._id ? 'text-tesla-red' : 'text-white group-hover:text-tesla-red'
+                }`}>
+                  {rest.name}
+                </h3>
+                <p className="text-[11px] text-tesla-muted mt-1 truncate">{rest.address || '海口市'}</p>
               </div>
               <div className="flex justify-between items-center mt-3">
-                <span className="text-[10px] uppercase tracking-wider text-tesla-light border border-tesla-gray/50 px-1.5 py-0.5 rounded bg-tesla-gray/20">小吃</span>
-                <span className="text-sm font-semibold text-white">¥25<span className="text-[10px] text-tesla-muted"> /人</span></span>
+                <div className="flex gap-1 flex-wrap">
+                  {rest.category.slice(0, 1).map(cat => (
+                    <span key={cat} className="text-[10px] uppercase tracking-wider text-tesla-light border border-tesla-gray/50 px-1.5 py-0.5 rounded bg-tesla-gray/20">
+                      {cat}
+                    </span>
+                  ))}
+                </div>
+                <span className="text-sm font-semibold text-white whitespace-nowrap">
+                  {rest.price_per_person ? `¥${rest.price_per_person}` : '-'}
+                  <span className="text-[10px] text-tesla-muted ml-0.5">/人</span>
+                </span>
               </div>
             </div>
           </div>
