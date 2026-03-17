@@ -77,7 +77,7 @@ export default function MapPage() {
 
   const suggestions = searchQuery.length > 1 
     ? restaurants
-        .filter(r => r.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        .filter(r => r.is_verified !== false && r.name.toLowerCase().includes(searchQuery.toLowerCase()))
         .slice(0, 5)
     : [];
 
@@ -213,7 +213,7 @@ export default function MapPage() {
       <Sidebar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
-        restaurants={filteredRestaurants}
+        restaurants={filteredRestaurants.filter(r => r.is_verified !== false)}
         onSelectRestaurant={handleSelectRestaurant}
         selectedRestaurantId={selectedId}
         favoriteIds={favoriteIds}

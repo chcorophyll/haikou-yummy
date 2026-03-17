@@ -134,6 +134,7 @@ export default function MapContainer({
     restaurants.forEach(restaurant => {
       const [lng, lat] = restaurant.location.coordinates;
       const isSelected = selectedRestaurantId === restaurant._id;
+      const isVerified = restaurant.is_verified !== false;
       
       const marker = new window.AMap.Marker({
         position: [lng, lat],
@@ -141,14 +142,39 @@ export default function MapContainer({
         zIndex: isSelected ? 110 : 100,
         content: `
           <div class="relative group">
-            <div class="w-5 h-5 ${isSelected ? 'bg-white scale-125 z-20 shadow-[0_0_20px_#fff]' : 'bg-tesla-red'} rounded-full border-2 border-white shadow-[0_0_10px_rgba(227,25,55,0.8)] cursor-pointer transition-all duration-500 hover:scale-110"></div>
+            <div class="w-5 h-5 ${
+              isSelected 
+                ? 'bg-white scale-125 z-20 shadow-[0_0_20px_#fff]' 
+                : isVerified ? 'bg-tesla-red' : 'bg-tesla-gray border-dashed border-tesla-muted opacity-80'
+            } rounded-full border-2 border-white shadow-[0_0_10px_rgba(227,25,55,0.8)] cursor-pointer transition-all duration-500 hover:scale-110"></div>
             ${isSelected ? '<div class="absolute -inset-2 bg-white/30 rounded-full animate-ping"></div>' : ''}
+            ${!isVerified ? '<div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-tesla-black/90 text-[8px] text-tesla-muted px-2 py-0.5 rounded border border-tesla-gray/30 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none uppercase tracking-tighter">审核中</div>' : ''}
           </div>
         `
       });
 
       marker.on('click', (e: any) => {
-        if (onSelectRestaurant) onSelectRestaurant(restaurant);
+        if (!isVerified) {
+          // Special interaction for unverified
+          const toast = document.createElement('div');
+          toast.className = "fixed top-20 left-1/2 -translate-x-1/2 z-[300] bg-tesla-black/95 border border-tesla-gray/50 px-6 py-3 rounded-2xl shadow-2xl text-white text-xs font-bold uppercase tracking-widest animate-in slide-in-from-bottom-4 duration-300";
+          toast.innerHTML = `
+            <div class="flex items-center gap-3">
+              <div class="w-2 h-2 bg-tesla-muted rounded-full animate-pulse"></div>
+              <span>此餐厅正在审阅中，暂时无法查看详情</span>
+            </div>
+          `;
+          document.body.appendChild(toast);
+          setTimeout(() => {
+            toast.classList.add('animate-out', 'fade-out', 'zoom-out-95');
+            setTimeout(() => toast.remove(), 300);
+          }, 2500);
+          
+          if (onSelectRestaurant) onSelectRestaurant(null);
+          infoWindowRef.current?.close();
+        } else {
+          if (onSelectRestaurant) onSelectRestaurant(restaurant);
+        }
         e.originEvent.stopPropagation();
       });
 
