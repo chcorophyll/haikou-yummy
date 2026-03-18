@@ -5,6 +5,7 @@ from bson import ObjectId
 
 from app.models.restaurant import RestaurantInDB, RestaurantCreate
 from app.core.database import get_database
+from app.services.amap import AmapService
 
 router = APIRouter()
 
@@ -16,6 +17,26 @@ def get_restaurant_collection() -> AsyncIOMotorCollection:
 async def create_restaurant(restaurant: RestaurantCreate):
     collection = get_restaurant_collection()
     restaurant_dict = restaurant.model_dump()
+    
+    # Data Enrichment: If address is missing or name is provided, try Amap
+    if not restaurant_dict.get("address") or restaurant_dict.get("source") == "ugc":
+        enriched_data = await AmapService.fetch_restaurant_data(restaurant_dict["name"])
+        if enriched_data:
+            # Update fields if they are missing in the original request
+            if not restaurant_dict.get("address"):
+                restaurant_dict["address"] = enriched_data["address"]
+            if not restaurant_dict.get("telephone"):
+                restaurant_dict["telephone"] = enriched_data["telephone"]
+            if not restaurant_dict.get("category"):
+                restaurant_dict["category"] = enriched_data["category"]
+            if not restaurant_dict.get("images"):
+                restaurant_dict["images"] = enriched_data["images"]
+            
+            # Update location if it's the default or missing (simplified check)
+            # For simplicity, we overwrite location if enriched data has it and source is UGC
+            if enriched_data.get("location"):
+                restaurant_dict["location"] = enriched_data["location"]
+
     result = await collection.insert_one(restaurant_dict)
     
     # Ensure spatial index for geo queries

@@ -4,20 +4,15 @@ import pytest
 import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
 
-# Set test environment overrides BEFORE importing the app
-os.environ["DATABASE_NAME"] = "test_haikou_yummy"
-# Assume local mongodb runs on 27017, can be overridden by environment
-os.environ.setdefault("MONGODB_URL", "mongodb://localhost:27017")
+# FORCE test environment overrides BEFORE importing the app
+# Use a dedicated test database name to prevent accidental production data loss
+os.environ["DATABASE_NAME"] = "test_haikou_yummy_v2" 
+# Use the real MongoDB URL if available in .env, otherwise fallback to local for development
+if not os.environ.get("MONGODB_URL"):
+    os.environ.setdefault("MONGODB_URL", "mongodb://localhost:27017")
 
 from app.main import app
 from app.core.database import connect_to_mongo, close_mongo_connection, get_database
-
-@pytest.fixture(scope="session")
-def event_loop():
-    """Create an instance of the default event loop for each test case."""
-    loop = asyncio.get_event_loop_policy().new_event_loop()
-    yield loop
-    loop.close()
 
 @pytest_asyncio.fixture(scope="session")
 async def setup_database():

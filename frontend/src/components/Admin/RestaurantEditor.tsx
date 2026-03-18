@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { X, Save, Loader2, MapPin, Phone, Tag, Info } from 'lucide-react';
 import { Restaurant } from '../../types/restaurant';
+import AMapLoader from '@amap/amap-jsapi-loader';
+
 
 interface RestaurantEditorProps {
   restaurant: Restaurant | null;
@@ -31,7 +33,70 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
     setError(null);
   }, [restaurant, isOpen]);
 
+  // Auto-fetch data when name stops changing
+  useEffect(() => {
+    // Only fetch if modal is actually open
+    if (!isOpen || !formData.name?.trim() || restaurant) return;
+    
+    // Inline check to avoid dependency issues before the function is hoisted/declared
+    const hasDataLoaded = !!(formData.address || formData.telephone || (formData.category && formData.category.length > 0) || (formData.images && formData.images.length > 0));
+    if (hasDataLoaded) return;
+
+    const timer = setTimeout(() => {
+      const key = import.meta.env.VITE_AMAP_KEY || '';
+      if (!key) return;
+
+      const securityCode = import.meta.env.VITE_AMAP_SECURITY_CODE || '';
+      if (securityCode) {
+        window._AMapSecurityConfig = { securityJsCode: securityCode };
+      }
+
+      setIsFetching(true);
+      AMapLoader.load({
+        key: key,
+        version: '2.0',
+        plugins: ['AMap.PlaceSearch'],
+      }).then((AMap) => {
+        AMap.plugin(['AMap.PlaceSearch'], () => {
+          const placeSearch = new AMap.PlaceSearch({ city: '海口', pageSize: 1, extensions: 'all' });
+          placeSearch.search(formData.name!, (status: string, result: any) => {
+            if (status === 'complete' && result.poiList && result.poiList.pois.length > 0) {
+              const poi = result.poiList.pois[0];
+              const rawCategories = poi.type ? poi.type.split(';').filter(Boolean) : [];
+              const cleanedCategories = rawCategories.filter((cat: string) => !['餐饮服务', '公司企业', '生活服务', '地名地址信息'].includes(cat));
+              const photos = poi.photos || [];
+              const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200";
+              const imageUrl = photos.length > 0 ? photos[0].url : DEFAULT_IMAGE;
+              
+              setFormData(prev => ({
+                ...prev,
+                name: poi.name || formData.name,
+                address: poi.address ? `海口市${poi.adname || ''}${poi.address}` : '',
+                telephone: poi.tel ? poi.tel.split(';')[0].split('/')[0] : '',
+                category: cleanedCategories.length > 0 ? cleanedCategories : ['管理员添加'],
+                images: [imageUrl],
+                location: { type: 'Point', coordinates: [poi.location.lng, poi.location.lat] }
+              }));
+              setError(null);
+            }
+            setIsFetching(false);
+          });
+        });
+      }).catch(err => {
+        console.error("AMap load error:", err);
+        setIsFetching(false);
+      });
+    }, 1000); // 1 second debounce
+
+    return () => clearTimeout(timer);
+  }, [formData.name, restaurant, isOpen, formData.address, formData.telephone, formData.category, formData.images]);
+
   if (!isOpen) return null;
+
+  // Check if we already have meaningful data aside from default coords
+  const isEditorDataLoaded = (data: Partial<Restaurant>) => {
+    return !!(data.address || data.telephone || (data.category && data.category.length > 0) || (data.images && data.images.length > 0));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,35 +105,58 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
       return;
     }
     setError(null);
-    
     setSaving(true);
+    
     try {
-      await onSave(restaurant?._id || '', formData);
+      let finalData = { ...formData };
+      
+      // If no ID (creating new) and no extra data loaded yet, do a silent fetch before saving
+      if (!restaurant && !isEditorDataLoaded(finalData)) {
+        setIsFetching(true);
+        const enriched = await performAmapSearch(finalData.name!);
+        if (enriched) {
+          finalData = { ...finalData, ...enriched };
+        }
+        setIsFetching(false);
+      }
+
+      await onSave(restaurant?._id || '', finalData);
       onClose();
     } catch (err) {
       console.error('Save failed', err);
+      setError('保存失败，请检查网络或控制台日志');
     } finally {
       setSaving(false);
     }
   };
 
-  const fetchAmapData = async () => {
-    if (!formData.name?.trim() || !window.AMap) return;
-    
-    setIsFetching(true);
+  const performAmapSearch = async (queryName: string): Promise<Partial<Restaurant> | null> => {
+    const key = import.meta.env.VITE_AMAP_KEY || '';
+    if (!key) return null;
+
+    const securityCode = import.meta.env.VITE_AMAP_SECURITY_CODE || '';
+    if (securityCode) {
+      window._AMapSecurityConfig = { securityJsCode: securityCode };
+    }
+
     try {
-      await new Promise<void>((resolve) => {
-        window.AMap.plugin(['AMap.PlaceSearch'], () => {
-          const placeSearch = new window.AMap.PlaceSearch({
+      const AMap = await AMapLoader.load({
+        key: key,
+        version: '2.0',
+        plugins: ['AMap.PlaceSearch'],
+      });
+
+      return new Promise((resolve) => {
+        AMap.plugin(['AMap.PlaceSearch'], () => {
+          const placeSearch = new AMap.PlaceSearch({
             city: '海口',
             pageSize: 1,
             extensions: 'all'
           });
 
-          placeSearch.search(formData.name, (status: string, result: any) => {
+          placeSearch.search(queryName, (status: string, result: any) => {
             if (status === 'complete' && result.poiList && result.poiList.pois.length > 0) {
               const poi = result.poiList.pois[0];
-              
               const rawCategories = poi.type ? poi.type.split(';').filter(Boolean) : [];
               const cleanedCategories = rawCategories.filter((cat: string) => 
                 !['餐饮服务', '公司企业', '生活服务', '地名地址信息'].includes(cat)
@@ -78,27 +166,37 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
               const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200";
               const imageUrl = photos.length > 0 ? photos[0].url : DEFAULT_IMAGE;
 
-              setFormData(prev => ({
-                ...prev,
-                name: poi.name || prev.name,
-                address: poi.address ? `海口市${poi.adname || ''}${poi.address}` : prev.address,
-                telephone: poi.tel ? poi.tel.split(';')[0].split('/')[0] : prev.telephone,
-                category: cleanedCategories.length > 0 ? cleanedCategories : (prev.category || []),
+              resolve({
+                name: poi.name || queryName,
+                address: poi.address ? `海口市${poi.adname || ''}${poi.address}` : '',
+                telephone: poi.tel ? poi.tel.split(';')[0].split('/')[0] : '',
+                category: cleanedCategories.length > 0 ? cleanedCategories : ['管理员添加'],
                 images: [imageUrl],
                 location: {
                   type: 'Point',
                   coordinates: [poi.location.lng, poi.location.lat]
                 }
-              }));
-              setError(null);
+              });
+            } else {
+              resolve(null);
             }
-            resolve();
           });
         });
       });
-    } finally {
-      setIsFetching(false);
+    } catch (e) {
+      console.error(e);
+      return null;
     }
+  };
+
+  const fetchAmapData = async (queryName: string) => {
+    setIsFetching(true);
+    const enriched = await performAmapSearch(queryName);
+    if (enriched) {
+      setFormData(prev => ({ ...prev, ...enriched }));
+      setError(null);
+    }
+    setIsFetching(false);
   };
 
   const updateCoords = (idx: number, val: string) => {
@@ -146,14 +244,14 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
                     setFormData({...formData, name: e.target.value});
                     if (error) setError(null);
                   }}
-                  placeholder="店名 (必填)"
+                  placeholder="店名 (必填，输入后自动匹配信息)"
                 />
                 <button
                   type="button"
-                  onClick={fetchAmapData}
+                  onClick={() => formData.name && fetchAmapData(formData.name)}
                   disabled={isFetching || !formData.name}
                   className="px-3 bg-tesla-gray/20 hover:bg-tesla-red/20 text-tesla-muted hover:text-tesla-red rounded-xl border border-tesla-gray/30 transition-all flex items-center justify-center disabled:opacity-50"
-                  title="从高德地图匹配数据"
+                  title="强制重新从高德地图匹配数据"
                 >
                   {isFetching ? <Loader2 size={16} className="animate-spin" /> : <MapPin size={16} />}
                 </button>
@@ -161,28 +259,30 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
               {error && <p className="text-tesla-red text-[10px] uppercase tracking-widest ml-1 animate-in fade-in slide-in-from-top-1">{error}</p>}
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-tesla-muted uppercase tracking-widest ml-1">联系电话</label>
+              <label className="text-[10px] font-bold text-tesla-muted uppercase tracking-widest ml-1">联系电话 (选填)</label>
               <div className="relative">
                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-tesla-muted" size={16} />
                 <input 
                   type="text" 
-                  className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all font-mono"
+                  className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all font-mono placeholder:text-tesla-gray/50"
                   value={formData.telephone || ''}
                   onChange={e => setFormData({...formData, telephone: e.target.value})}
+                  placeholder="留空则自动匹配"
                 />
               </div>
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-tesla-muted uppercase tracking-widest ml-1">详细地址</label>
+            <label className="text-[10px] font-bold text-tesla-muted uppercase tracking-widest ml-1">详细地址 (选填)</label>
             <div className="relative">
               <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-tesla-muted" size={16} />
               <input 
                 type="text" 
-                className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all"
+                className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all placeholder:text-tesla-gray/50"
                 value={formData.address || ''}
                 onChange={e => setFormData({...formData, address: e.target.value})}
+                placeholder="留空则自动匹配"
               />
             </div>
           </div>
@@ -191,7 +291,7 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
           <div className="p-4 bg-tesla-black/40 rounded-2xl border border-tesla-gray/20 space-y-4">
             <div className="flex items-center gap-2 mb-2">
               <Tag className="text-tesla-red" size={16} />
-              <span className="text-[10px] font-bold text-white uppercase tracking-widest">坐标校准 (Lng, Lat)</span>
+              <span className="text-[10px] font-bold text-white uppercase tracking-widest">坐标校准 (选填, 自动匹配)</span>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
@@ -218,37 +318,37 @@ export default function RestaurantEditor({ restaurant, isOpen, onClose, onSave }
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
               <Tag className="text-tesla-red" size={16} />
-              <span className="text-[10px] font-bold text-white uppercase tracking-widest">分类标签 (逗号分隔)</span>
+              <span className="text-[10px] font-bold text-white uppercase tracking-widest">分类标签 (选填，逗号分隔)</span>
             </div>
             <input 
               type="text" 
-              className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl px-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all"
+              className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl px-4 py-3 text-sm text-white focus:border-tesla-red/50 focus:outline-none transition-all placeholder:text-tesla-gray/50"
               value={formData.category?.join(', ') || ''}
               onChange={e => setFormData({...formData, category: e.target.value.split(',').map(s => s.trim())})}
-              placeholder="例如: 海南粉, 老字号"
+              placeholder="留空则自动匹配，例如: 海南粉, 老字号"
             />
           </div>
 
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
               <Tag className="text-tesla-red" size={16} />
-              <span className="text-[10px] font-bold text-white uppercase tracking-widest">店面展示图</span>
+              <span className="text-[10px] font-bold text-white uppercase tracking-widest">店面展示图 (选填)</span>
             </div>
             <div className="space-y-3">
-              {formData.images && formData.images.length > 0 && (
+              {formData.images && formData.images.length > 0 && formData.images[0] !== "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200" && (
                 <div className="relative aspect-video rounded-2xl overflow-hidden border border-tesla-gray/30 group">
                   <img src={formData.images[0]} alt="Preview" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-tesla-black/60 to-transparent flex items-end p-4">
-                    <span className="text-[10px] text-white font-bold tracking-widest uppercase opacity-70">预览图预览</span>
+                    <span className="text-[10px] text-white font-bold tracking-widest uppercase opacity-70">自动匹配的预览图</span>
                   </div>
                 </div>
               )}
               <input 
                 type="text" 
-                className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl px-4 py-3 text-xs text-tesla-red font-mono focus:border-tesla-red outline-none"
-                placeholder="图片 URL 地址"
-                value={formData.images?.[0] || ''}
-                onChange={e => setFormData({...formData, images: [e.target.value]})}
+                className="w-full bg-tesla-black border border-tesla-gray/30 rounded-xl px-4 py-3 text-xs text-tesla-red font-mono focus:border-tesla-red outline-none placeholder:text-tesla-gray/50 placeholder:font-sans"
+                placeholder="留空则自动匹配，或输入外部图片 URL"
+                value={formData.images?.[0] === "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200" ? '' : (formData.images?.[0] || '')}
+                onChange={e => setFormData({...formData, images: [e.target.value || "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200"]})}
               />
               <p className="text-[9px] text-tesla-muted uppercase tracking-tighter ml-1">高德地图 API 封面或外部图片链接</p>
             </div>

@@ -35,10 +35,16 @@ export default function MapPage() {
     const fetchData = async () => {
       try {
         setLoading(true);
+        console.log('Fetching restaurants from:', restaurantService.listRestaurants);
         const data = await restaurantService.listRestaurants();
+        console.log('Fetched restaurants count:', data.length);
+        if (data.length === 0) {
+          console.warn('Backend returned 0 restaurants! Check DB connection or URL.');
+        }
         setRestaurants(data);
       } catch (error) {
         console.error('Failed to fetch restaurants:', error);
+        alert(`API Error: ${error instanceof Error ? error.message : String(error)}. Please check if backend is running.`);
       } finally {
         setLoading(false);
       }
