@@ -1,0 +1,25 @@
+{
+  "name": "海口美食地图",
+  "appid": "",
+  "description": "海口本地美食探店地图，发现隐藏宝藏小店",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "mp-weixin": {
+    "appid": "",
+    "setting": {
+      "urlCheck": false
+    },
+    "usingComponents": true,
+    "permission": {
+      "scope.userLocation": {
+        "desc": "用于显示您在地图上的位置，并提供附近餐厅推荐"
+      }
+    },
+    "requiredPrivateInfos": ["getLocation", "chooseLocation"]
+  },
+  "uniStatistics": {
+    "enable": false
+  },
+  "vueVersion": "3"
+}

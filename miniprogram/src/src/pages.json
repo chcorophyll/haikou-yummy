@@ -1,0 +1,80 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "海口美食地图",
+        "navigationBarBackgroundColor": "#0a0a0a",
+        "navigationBarTextStyle": "white",
+        "navigationStyle": "custom",
+        "backgroundColor": "#111111",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/list/list",
+      "style": {
+        "navigationBarTitleText": "发现美食",
+        "navigationBarBackgroundColor": "#0a0a0a",
+        "navigationBarTextStyle": "white",
+        "backgroundColor": "#111111",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/detail/detail",
+      "style": {
+        "navigationBarTitleText": "餐厅详情",
+        "navigationBarBackgroundColor": "#0a0a0a",
+        "navigationBarTextStyle": "white",
+        "backgroundColor": "#111111"
+      }
+    },
+    {
+      "path": "pages/favorites/favorites",
+      "style": {
+        "navigationBarTitleText": "我的收藏",
+        "navigationBarBackgroundColor": "#0a0a0a",
+        "navigationBarTextStyle": "white",
+        "backgroundColor": "#111111",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/submit/submit",
+      "style": {
+        "navigationBarTitleText": "推荐宝藏店",
+        "navigationBarBackgroundColor": "#0a0a0a",
+        "navigationBarTextStyle": "white",
+        "backgroundColor": "#111111"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "Yummy",
+    "navigationBarBackgroundColor": "#0a0a0a",
+    "backgroundColor": "#111111",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#e31937",
+    "backgroundColor": "#0a0a0a",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "地图"
+      },
+      {
+        "pagePath": "pages/list/list",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/favorites/favorites",
+        "text": "收藏"
+      }
+    ]
+  }
+}

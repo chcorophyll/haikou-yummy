@@ -1,0 +1,96 @@
+/* ===================================================
+ * Tesla 暗黑设计系统 — 海口美食地图小程序
+ * 与 Web 端 Tailwind 配置 1:1 对应
+ * =================================================== */
+
+/* --- 颜色 CSS 变量 --- */
+page {
+  --tesla-dark:    #111111;
+  --tesla-black:   #0a0a0a;
+  --tesla-red:     #e31937;
+  --tesla-gray:    #2a2a2a;
+  --tesla-muted:   #666666;
+  --tesla-light:   #cccccc;
+  --tesla-white:   #ffffff;
+
+  background-color: var(--tesla-dark);
+  color: var(--tesla-light);
+  font-family: -apple-system, PingFang SC, 'Helvetica Neue', sans-serif;
+}
+
+/* --- SCSS 变量 (供组件引用) --- */
+$tesla-dark:  #111111;
+$tesla-black: #0a0a0a;
+$tesla-red:   #e31937;
+$tesla-gray:  #2a2a2a;
+$tesla-muted: #666666;
+$tesla-light: #cccccc;
+$tesla-white: #ffffff;
+
+/* --- 动效 --- */
+@keyframes ping {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* --- 通用工具类 --- */
+.text-red     { color: $tesla-red; }
+.text-muted   { color: $tesla-muted; }
+.text-light   { color: $tesla-light; }
+.text-white   { color: $tesla-white; }
+
+.bg-black     { background-color: $tesla-black; }
+.bg-dark      { background-color: $tesla-dark; }
+.bg-gray      { background-color: $tesla-gray; }
+.bg-red       { background-color: $tesla-red; }
+
+.border-gray  { border-color: $tesla-gray; }
+.border-red   { border-color: $tesla-red; }
+
+.rounded-full { border-radius: 9999rpx; }
+.rounded-xl   { border-radius: 24rpx; }
+.rounded-lg   { border-radius: 16rpx; }
+.rounded-md   { border-radius: 12rpx; }
+
+.shadow-red   {
+  box-shadow: 0 0 20rpx rgba(227, 25, 55, 0.4);
+}
+.glass-panel  {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20rpx);
+  border: 1rpx solid rgba(42, 42, 42, 0.6);
+}
+
+.tracking-wide  { letter-spacing: 4rpx; }
+.tracking-wider { letter-spacing: 6rpx; }
+.uppercase      { text-transform: uppercase; }
+.font-bold      { font-weight: 700; }
+.truncate       {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.flex           { display: flex; }
+.flex-col       { flex-direction: column; }
+.items-center   { align-items: center; }
+.justify-between{ justify-content: space-between; }
+.justify-center { justify-content: center; }
+.flex-1         { flex: 1; }
+.w-full         { width: 100%; }
+.h-full         { height: 100%; }
+.relative       { position: relative; }
+.absolute       { position: absolute; }
+.overflow-hidden{ overflow: hidden; }
+.text-center    { text-align: center; }
