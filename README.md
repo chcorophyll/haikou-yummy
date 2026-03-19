@@ -68,4 +68,12 @@
 *   **收藏持久化**：支持本地持久化收藏夹，轻松管理心仪的小店。
 
 ---
+
+## 📸 项目展示 (Gallery)
+
+| 首页地图 | 餐厅详情 | 推荐表单 |
+| :---: | :---: | :---: |
+| ![Map](docs/screenshots/map.png) | ![Detail](docs/screenshots/detail.png) | ![Submit](docs/screenshots/submit.png) |
+
+---
 **Haikou Yummy Project** | 2026
