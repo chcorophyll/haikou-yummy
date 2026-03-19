@@ -115,6 +115,7 @@ import Toast from '../../components/Toast/Toast.vue'
 const store = useRestaurantStore()
 const toastRef = ref<any>(null)
 const showBottomSheet = ref(false)
+const navigating = ref(false)
 
 // 使用 Store 中的全局高度，解决父组件无法 inject 子组件 provide 的问题
 const navBarHeight = computed(() => store.navBarHeight)
@@ -247,8 +248,16 @@ function callPhone(tel?: string) {
 }
 
 function goDetail(id: string) {
+  if (navigating.value) return
+  navigating.value = true
+  setTimeout(() => navigating.value = false, 1000)
+
   const rest = store.restaurants.find(r => r._id === id)
   const nameParam = rest ? `&name=${encodeURIComponent(rest.name)}` : ''
+  
+  // -- ARCHITECT FIX: Pre-emptive Sync to kill flickering --
+  store.selectRestaurant(id)
+  
   uni.navigateTo({ url: `/pages/detail/detail?id=${id}${nameParam}` })
 }
 

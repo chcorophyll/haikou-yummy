@@ -22,6 +22,7 @@ const props = defineProps<{
 
 const store = useRestaurantStore()
 const navBarHeight = computed(() => store.navBarHeight)
+const menuButtonHeight = computed(() => store.menuButtonHeight)
 const sysInfo = uni.getSystemInfoSync()
 const statusBarHeight = ref(sysInfo.statusBarHeight || 0)
 

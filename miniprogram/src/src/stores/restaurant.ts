@@ -18,8 +18,11 @@ export const useRestaurantStore = defineStore('restaurant', () => {
   const menuButtonInfo = uni.getMenuButtonBoundingClientRect ? uni.getMenuButtonBoundingClientRect() : null
   
   const navBarHeight = ref<number>(88) // 默认值
+  const menuButtonHeight = ref<number>(32) // 默认值
+
   if (menuButtonInfo) {
     navBarHeight.value = (menuButtonInfo.top - statusBarHeight) * 2 + menuButtonInfo.height + statusBarHeight
+    menuButtonHeight.value = menuButtonInfo.height
   } else {
     navBarHeight.value = statusBarHeight + 44
   }
@@ -102,6 +105,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     searchQuery,
     activeCategory,
     navBarHeight,
+    menuButtonHeight,
     favoriteIds,
     filteredRestaurants,
     verifiedRestaurants,

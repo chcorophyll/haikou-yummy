@@ -61,6 +61,7 @@ import Toast from '../../components/Toast/Toast.vue'
 const store = useRestaurantStore()
 const toastRef = ref<any>(null)
 const navBarHeight = computed(() => store.navBarHeight)
+const navigating = ref(false)
 
 onLoad(() => {
   if (store.restaurants.length === 0) {
@@ -75,10 +76,15 @@ onShow(() => {
 })
 
 function onSelect(rest: Restaurant) {
+  if (navigating.value) return
+  navigating.value = true
+  setTimeout(() => navigating.value = false, 1000)
+
   if (rest.is_verified === false) {
     toastRef.value?.show('此餐厅正在审阅中，暂时无法查看详情', 'info')
     return
   }
+  // -- ARCHITECT FIX: Pre-emptive Sync to kill flickering --
   store.selectRestaurant(rest._id)
   uni.navigateTo({ url: `/pages/detail/detail?id=${rest._id}&name=${encodeURIComponent(rest.name)}` })
 }

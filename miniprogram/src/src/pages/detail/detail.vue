@@ -1,67 +1,63 @@
 <template>
   <view class="container">
     <NavBar :title="navTitle" :back="true" />
-
-    <scroll-view scroll-y class="content">
-      <!-- 轮播图 -->
-      <view class="banner" v-if="restaurant">
-        <swiper class="swiper" circular autoplay :interval="3000" indicator-dots indicator-active-color="#e31937">
-          <swiper-item v-if="!restaurant.images || restaurant.images.length === 0">
-            <image src="https://placehold.co/800x600/222/555?text=Haikou+Yummy" mode="aspectFill" class="banner-img" />
-          </swiper-item>
-          <swiper-item v-for="(img, idx) in restaurant.images" :key="idx">
-            <image :src="img" mode="aspectFill" class="banner-img" @tap="previewImage(img, restaurant.images)" />
-          </swiper-item>
-        </swiper>
-        <view class="banner-overlay"></view>
-      </view>
-
-      <!-- 主要信息 -->
-      <view class="info-card glass-panel" v-if="restaurant">
-        <view class="header-row">
-          <text class="name">{{ restaurant.name }}</text>
-          <view class="rating-badge" v-if="restaurant.rating">{{ restaurant.rating }}</view>
+    
+    <!-- ATOMIC RENDER: Lock entire tree until state is synced -->
+    <template v-if="restaurant">
+      <scroll-view scroll-y class="content">
+        <!-- 轮播图 -->
+        <view class="banner">
+          <swiper class="swiper" circular autoplay :interval="3000" indicator-dots indicator-active-color="#e31937">
+            <swiper-item v-if="!restaurant.images || restaurant.images.length === 0">
+              <image src="https://placehold.co/800x600/222/555?text=Haikou+Yummy" mode="aspectFill" class="banner-img" />
+            </swiper-item>
+            <swiper-item v-for="(img, idx) in (restaurant?.images || [])" :key="idx">
+              <image :src="img" mode="aspectFill" class="banner-img" @tap="previewImage(img, restaurant?.images || [])" />
+            </swiper-item>
+          </swiper>
+          <view class="banner-overlay"></view>
         </view>
 
-        <view class="tags-row" v-if="restaurant.category && restaurant.category.length > 0">
-          <text class="cat-tag" v-for="cat in restaurant.category" :key="cat">{{ cat }}</text>
-        </view>
-
-        <view class="divider"></view>
-
-        <!-- 地址与电话 -->
-        <view class="contact-section">
-          <view class="item-row" @tap="openLocation">
-            <view class="icon-box"><text class="icon">📍</text></view>
-            <view class="item-content">
-              <text class="item-title">餐厅地址</text>
-              <text class="item-desc">{{ restaurant.address || '暂无详细地址' }}</text>
-            </view>
-            <text class="arrow">›</text>
+        <!-- 主要信息 -->
+        <view class="info-card glass-panel">
+          <view class="header-row">
+            <text class="name">{{ restaurant.name }}</text>
+            <view class="rating-badge" v-if="restaurant.rating">{{ restaurant.rating }}</view>
           </view>
 
-          <view class="item-row" @tap="callPhone">
-            <view class="icon-box"><text class="icon">📞</text></view>
-            <view class="item-content">
-              <text class="item-title">联系电话</text>
-              <text class="item-desc highlight">{{ restaurant.telephone || '暂无号码' }}</text>
+          <view class="tags-row" v-if="restaurant.category && restaurant.category.length > 0">
+            <text class="cat-tag" v-for="cat in restaurant.category" :key="cat">{{ cat }}</text>
+          </view>
+
+          <view class="divider"></view>
+
+          <!-- 地址与电话 -->
+          <view class="contact-section">
+            <view class="item-row" @tap="openLocation">
+              <view class="icon-box"><text class="icon">📍</text></view>
+              <view class="item-content">
+                <text class="item-title">餐厅地址</text>
+                <text class="item-desc">{{ restaurant.address || '暂无详细地址' }}</text>
+              </view>
+              <text class="arrow">›</text>
             </view>
-            <text class="arrow">›</text>
+
+            <view class="item-row" @tap="callPhone">
+              <view class="icon-box"><text class="icon">📞</text></view>
+              <view class="item-content">
+                <text class="item-title">联系电话</text>
+                <text class="item-desc highlight">{{ restaurant.telephone || '暂无号码' }}</text>
+              </view>
+              <text class="arrow">›</text>
+            </view>
           </view>
         </view>
-      </view>
-      
-      <view v-if="!restaurant && store.loading" class="loading-state">
-        <text class="loading-text">加载中...</text>
-      </view>
-      
-      <!-- 适配 iPhone 底部安全区 -->
-      <view class="safe-area-bottom-spacer"></view>
-    </scroll-view>
+        
+        <view class="safe-area-bottom-spacer"></view>
+      </scroll-view>
 
-    <!-- 固定底栏 -->
-    <view class="fixed-bottom glass-panel">
-      <template v-if="restaurant">
+      <!-- 固定底栏 -->
+      <view class="fixed-bottom glass-panel">
         <view class="action-btn fav-btn" @tap="store.toggleFavorite(restaurant._id)">
           <text class="btn-icon" :class="{ 'text-red': store.isFavorite(restaurant._id) }">
             {{ store.isFavorite(restaurant._id) ? '♥' : '♡' }}
@@ -72,9 +68,16 @@
           <text class="btn-icon">🗺️</text>
           <text class="btn-text">路线导航</text>
         </view>
-      </template>
+      </view>
+    </template>
+
+    <!-- Skeleton / Loading State -->
+    <view v-else class="loading-state">
+      <view class="skeleton-placeholder glass-panel">
+        <text class="loading-text">正在校准数据渲染...</text>
+      </view>
     </view>
-    
+
     <view class="safe-area-bottom bg-black"></view>
   </view>
 </template>
@@ -89,13 +92,10 @@ const store = useRestaurantStore()
 const currentId = ref<string | null>(null)
 const urlName = ref('')
 
-// --- CRITICAL FIX FOR DOUBLE REFRESH ---
-// Use store data IMMEDIATELY during setup to ensure zero-flicker on first render.
-// Since the previous page calls store.selectRestaurant(id) BEFORE navigation,
-// store.selectedId is already pointing to the correct record.
-const initialId = store.selectedId
-const initialData = initialId ? store.restaurants.find(r => r._id === initialId) : null
-const restaurant = ref<any>(initialData)
+// --- OPTIMIZED FOR ZERO FLICKER ---
+// Directly bind to store computed property. This ensures that the moment
+// store.selectedId is updated (by the caller), this page has the data.
+const restaurant = computed(() => store.selectedRestaurant)
 
 const navTitle = computed(() => {
   return restaurant.value?.name || urlName.value || '餐厅详情'
@@ -103,31 +103,19 @@ const navTitle = computed(() => {
 
 onLoad((options) => {
   if (options && options.id) {
-    currentId.value = options.id
     if (options.name) {
       urlName.value = decodeURIComponent(options.name)
     }
     
-    // 再次确认并同步 store (防止直接通过 URL 进入的情况)
-    if (store.selectedId !== options.id) {
+    // ARCHITECT FIX: Only sync if store is empty or different, but 
+    // we trust the caller has already set the state for smooth transition.
+    if (!store.selectedId || store.selectedId !== options.id) {
       store.selectRestaurant(options.id)
     }
     
-    // 如果 setup 没有拿到数据，或者数据不对，则在此更新
-    if (!restaurant.value || restaurant.value._id !== options.id) {
-      const found = store.restaurants.find(r => r._id === options.id)
-      if (found) {
-        restaurant.value = found
-      }
-    }
-    
-    // 仅在确实没有数据时才触发全局抓取
-    if (!restaurant.value || store.restaurants.length === 0) {
-      store.fetchAll().then(() => {
-        if (!restaurant.value) {
-          restaurant.value = store.restaurants.find(r => r._id === options.id) || null
-        }
-      })
+    // Safety: fetch all if store is empty (e.g. direct URL access)
+    if (store.restaurants.length === 0) {
+      store.fetchAll()
     }
   }
 })
@@ -336,11 +324,22 @@ function openLocation() {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 100rpx 40rpx;
+}
+
+.skeleton-placeholder {
+  width: 100%;
+  height: 600rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32rpx;
 }
 
 .loading-text {
-  color: #666;
-  font-size: 28rpx;
+  color: #444;
+  font-size: 24rpx;
+  letter-spacing: 2rpx;
 }
 
 .safe-area-bottom-spacer {

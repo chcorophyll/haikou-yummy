@@ -8,6 +8,7 @@ export interface Restaurant {
   rating?: string | number
   images?: string[]
   is_verified?: boolean
+  reason?: string
   location: {
     type: 'Point'
     coordinates: [number, number] // [lng, lat]

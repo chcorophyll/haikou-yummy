@@ -1,65 +1,62 @@
 <template>
   <view class="container">
-    <!-- NavBar 必须在最外层以保持稳定 -->
-    <NavBar title="推荐宝藏店" :back="true" />
+    <NavBar title="发布推荐" :back="true" />
     
-    <scroll-view scroll-y class="form-container">
-      <!-- Tesla Style Header -->
-      <view class="tesla-header">
-        <text class="title">分享您的美食发现</text>
-        <text class="subtitle">让更多人发现海口值得去的角落</text>
-      </view>
-
-      <!-- Glassmorphism Card -->
-      <view class="glass-card">
-        <view class="form-group">
-          <text class="label">餐厅名称</text>
-          <input 
-            class="tesla-input" 
-            v-model="formData.name" 
-            placeholder="请输入餐厅名称" 
-            placeholder-class="placeholder"
-          />
+    <scroll-view scroll-y class="form-scroll">
+      <view class="form-wrapper">
+        <!-- Tesla Style Header: Minimalist & Pure -->
+        <view class="tesla-header">
+          <text class="title">发现美味</text>
+          <text class="subtitle">SHARE YOUR FAVORITE LOCATIONS IN HAIKOU</text>
         </view>
 
-        <view class="form-group">
-          <text class="label">推荐理由</text>
-          <textarea 
-            class="tesla-textarea" 
-            v-model="formData.reason" 
-            placeholder="说说为什么推荐这家店？推荐菜品是什么？" 
-            placeholder-class="placeholder"
-          />
-        </view>
+        <!-- Minimalist Form: No Borders, High Contrast -->
+        <view class="tesla-form">
+          <view class="form-group">
+            <text class="label">餐厅名称</text>
+            <input 
+              class="tesla-input" 
+              v-model="formData.name" 
+              placeholder="请输入店铺全称..." 
+              placeholder-class="placeholder"
+            />
+          </view>
 
-        <view class="form-group">
-          <text class="label">位置信息</text>
-          <view class="location-picker" @tap="chooseLocation">
-            <view class="loc-left">
-              <text class="icon">📍</text>
-              <text class="loc-text">{{ formData.address || '点击选择餐厅位置' }}</text>
+          <view class="form-group">
+            <text class="label">推荐理由</text>
+            <textarea 
+              class="tesla-textarea" 
+              v-model="formData.reason" 
+              placeholder="请描述您的推荐理由，例如必点菜品..." 
+              placeholder-class="placeholder"
+            />
+          </view>
+
+          <view class="form-group">
+            <text class="label">地理位置</text>
+            <view class="location-picker" @tap="chooseLocation">
+              <text class="loc-text">{{ formData.address || '在地图上选择位置' }}</text>
+              <text class="arrow">›</text>
             </view>
-            <text class="arrow">›</text>
           </view>
         </view>
-      </view>
 
-      <!-- Tesla Red Submit Button -->
-      <view class="btn-area">
-        <button
-          class="tesla-btn"
-          :class="{ 'btn--disabled': !isValid || submitting }"
-          :disabled="!isValid || submitting"
-          @tap="onSubmit"
-        >
-          <text v-if="submitting" class="loading-icon spin">⏳</text>
-          <text class="btn-text">{{ submitting ? '提交中...' : '提交' }}</text>
-        </button>
-      </view>
-      
-      <!-- Footer Spacer -->
-      <view class="footer-note">
-        <text>您的推荐在审核通过后将正式上线地图</text>
+        <!-- Tesla Red Submit Button -->
+        <view class="btn-area">
+          <button
+            class="tesla-btn"
+            :class="{ 'btn--disabled': !isValid || submitting }"
+            :disabled="!isValid || submitting"
+            @tap="onSubmit"
+          >
+            <text v-if="submitting" class="loading-icon spin">⏳</text>
+            <text class="btn-text">{{ submitting ? '正在提交...' : '立即发布' }}</text>
+          </button>
+        </view>
+        
+        <view class="footer-note">
+          <text>提交后需经管理员审核方可公开展示</text>
+        </view>
       </view>
       
       <view class="safe-area-bottom"></view>
@@ -111,12 +108,12 @@ async function onSubmit() {
       location: formData.location
     })
     
-    uni.showToast({ title: '提交成功，感谢分享', icon: 'success' })
+    uni.showToast({ title: '提交成功', icon: 'success' })
     setTimeout(() => {
       uni.navigateBack()
     }, 1500)
   } catch (err) {
-    uni.showToast({ title: '提交失败，请重试', icon: 'error' })
+    uni.showToast({ title: '提交失败', icon: 'error' })
   } finally {
     submitting.value = false
   }
@@ -128,158 +125,150 @@ async function onSubmit() {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #000000; /* Tesla Deep Black */
+  background: #000000;
   color: #ffffff;
 }
 
-.form-container {
+.form-scroll {
   flex: 1;
-  padding: 0 48rpx;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  height: 100%; // ARCHITECT FIX: Lock height for centering
+}
+
+.form-wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // Vertical Centering
+  padding: 60rpx 64rpx 100rpx;
+  box-sizing: border-box;
 }
 
 .tesla-header {
-  padding: 80rpx 0 60rpx;
-  display: flex;
-  flex-direction: column;
-  gap: 16rpx;
+  margin-bottom: 80rpx;
+  text-align: center;
 
   .title {
     font-size: 64rpx;
-    font-weight: 600;
-    letter-spacing: -3rpx;
+    font-weight: 800;
+    letter-spacing: 4rpx;
+    display: block;
+    margin-bottom: 12rpx;
+    color: #ffffff;
   }
 
   .subtitle {
-    font-size: 28rpx;
-    color: #666;
+    font-size: 18rpx;
+    color: #555;
+    letter-spacing: 2rpx;
+    font-weight: 500;
   }
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(40px);
-  border: 1rpx solid rgba(255, 255, 255, 0.08);
-  border-radius: 48rpx;
-  padding: 48rpx;
+.tesla-form {
   display: flex;
   flex-direction: column;
-  gap: 56rpx;
-  box-shadow: 0 20rpx 60rpx rgba(0,0,0,0.5);
+  gap: 80rpx;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
+  gap: 24rpx;
 
   .label {
-    font-size: 22rpx;
+    font-size: 20rpx;
     font-weight: 700;
     text-transform: uppercase;
     color: #444;
-    letter-spacing: 3rpx;
+    letter-spacing: 5rpx;
   }
 }
 
 .tesla-input, .tesla-textarea {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1rpx solid rgba(255, 255, 255, 0.05);
-  border-radius: 16rpx;
-  padding: 28rpx;
+  background: transparent;
+  border-bottom: 2rpx solid #222;
+  padding: 20rpx 0;
   font-size: 32rpx;
   color: #fff;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
 
   &:focus {
-    border-color: #e31937;
-    background: rgba(227, 25, 55, 0.03);
-    box-shadow: 0 0 20rpx rgba(227, 25, 55, 0.1);
+    border-bottom-color: #e31937;
   }
 }
 
 .tesla-textarea {
-  height: 240rpx;
-  width: auto;
+  height: 160rpx;
+  width: 100%;
 }
 
 .location-picker {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.02);
-  padding: 28rpx;
-  border-radius: 16rpx;
-  border: 1rpx solid rgba(255, 255, 255, 0.05);
+  border-bottom: 2rpx solid #222;
+  padding: 20rpx 0;
 
-  .loc-left {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    overflow: hidden;
+  &:active {
+    opacity: 0.6;
   }
 
-  .icon { font-size: 32rpx; margin-right: 20rpx; }
   .loc-text { 
     font-size: 28rpx; 
-    color: #bbb;
+    color: #888;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex: 1;
   }
   .arrow { color: #333; font-size: 36rpx; }
 }
 
 .btn-area {
-  margin: 100rpx 0 40rpx;
+  margin: 120rpx 0 60rpx;
 }
 
 .tesla-btn {
   background: #e31937;
   color: #fff;
-  height: 110rpx;
-  border-radius: 55rpx;
+  height: 100rpx;
+  border-radius: 4rpx; // Sharp borders for Tesla minimalist feel
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20rpx;
   font-weight: 700;
-  font-size: 34rpx;
+  font-size: 28rpx;
+  letter-spacing: 4rpx;
   border: none;
-  box-shadow: 0 15rpx 40rpx rgba(227, 25, 55, 0.35);
   transition: all 0.3s;
 
   &.btn--disabled {
-    background: #1a1a1a;
-    color: #444;
-    box-shadow: none;
+    background: #111;
+    color: #333;
   }
 
   &::after { display: none; }
 
   &:active:not(.btn--disabled) {
-    transform: translateY(2rpx);
-    opacity: 0.9;
-    box-shadow: 0 5rpx 20rpx rgba(227, 25, 55, 0.2);
+    background: #c2152f;
   }
 }
 
 .footer-note {
   text-align: center;
-  padding-bottom: 60rpx;
+  margin-top: 40rpx;
   text {
-    font-size: 22rpx;
+    font-size: 20rpx;
     color: #444;
+    letter-spacing: 1rpx;
+    font-weight: 400;
   }
 }
 
-.loading-icon {
-  font-size: 36rpx;
-}
-
 .spin {
-  animation: rotate 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: rotate 1.2s linear infinite;
 }
 
 @keyframes rotate {
@@ -292,6 +281,6 @@ async function onSubmit() {
 }
 
 .placeholder {
-  color: #222;
+  color: #1a1a1a;
 }
 </style>

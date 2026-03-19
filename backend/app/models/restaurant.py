@@ -17,6 +17,7 @@ class RestaurantBase(BaseModel):
     source: str = Field("pgc", description="Source of the data: pgc, crawler, or ugc")
     is_verified: bool = Field(False, description="Whether the restaurant is verified by admin")
     telephone: Optional[str] = Field(None, description="Contact phone number")
+    reason: Optional[str] = Field(None, description="Reason for recommendation (UGC)")
 
     @field_validator('address', mode='before')
     @classmethod
@@ -38,6 +39,7 @@ class RestaurantUpdate(BaseModel):
     opening_hours: Optional[str] = None
     rating: Optional[float] = None
     is_verified: Optional[bool] = None
+    reason: Optional[str] = None
 
 class RestaurantInDB(RestaurantBase):
     id: str = Field(..., alias="_id", description="MongoDB output _id")
