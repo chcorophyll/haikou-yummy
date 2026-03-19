@@ -3,6 +3,16 @@
 ## 项目简介
 **海口美食地图 (Haikou Yummy)** 是一款聚焦海南海口本地美食打卡、探店推荐的地图应用。与传统的点评软件不同，本项目致是作者羽毛球球友实际消费的“私藏馆子”，打造一个最具海口风味的美食指北。
 
+---
+
+## 📸 项目展示 (Gallery)
+
+| 首页地图 | 餐厅管理 | 推荐表单 |
+| :---: | :---: | :---: |
+| ![Map](docs/screenshots/map.png) | ![Detail](docs/screenshots/detail.png) | ![Submit](docs/screenshots/submit.png) |
+
+---
+
 ## 🎯 核心目标与技术栈选型
 
 *   **平台支持**：Web 端 (响应式) + 微信小程序
@@ -66,14 +76,6 @@
 *   **数据精准**：所有 26 家餐厅经纬度、地址、电话均通过高德/腾讯 API 深度校准与补全，实拍头图 100% 覆盖。
 *   **极致体验**：Tesla 车机风格的暗黑 UI 设计，配合 **Zero-Flicker 零闪烁架构**，提供极致丝滑的页面切换体验。
 *   **收藏持久化**：支持本地持久化收藏夹，轻松管理心仪的小店。
-
----
-
-## 📸 项目展示 (Gallery)
-
-| 首页地图 | 餐厅详情 | 推荐表单 |
-| :---: | :---: | :---: |
-| ![Map](docs/screenshots/map.png) | ![Detail](docs/screenshots/detail.png) | ![Submit](docs/screenshots/submit.png) |
 
 ---
 **Haikou Yummy Project** | 2026
